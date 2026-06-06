@@ -4,6 +4,8 @@
 
 A joyful, safe, gamified web platform that teaches the basics of Islam to Muslim children (6–9) in non-Muslim majority countries. Built with strong parent support tools, scholar-reviewed content, and a safety-first community.
 
+🌐 **Live demo:** [noorquest-seven.vercel.app](https://noorquest-seven.vercel.app) (try `/en` or `/ar`)
+
 ---
 
 ## ✨ What's in this repo
@@ -17,7 +19,7 @@ A joyful, safe, gamified web platform that teaches the basics of Islam to Muslim
 | [`docs/ADR.md`](docs/ADR.md) | Architecture Decision Records (why we picked what we picked) |
 | [`docs/sample-content-archive.md`](docs/sample-content-archive.md) | Original sample dialogues and parent guides (preserved) |
 | [`prototypes/`](prototypes/) | 8 interactive HTML prototypes (no build step) |
-| [`noorquest/`](noorquest/) | Next.js 14 app — working MVP (Landing + Halal Scanner) |
+| [`noorquest/`](noorquest/) | Next.js 14 app — working MVP (Landing + Halal Scanner), deployed to Vercel |
 | [`.github/`](.github/) | Issue + PR templates, CI workflow |
 
 ---
