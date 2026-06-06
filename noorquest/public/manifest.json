@@ -1,0 +1,42 @@
+{
+  "name": "NoorQuest — Bright Adventures in Faith",
+  "short_name": "NoorQuest",
+  "description": "A safe, gamified web app teaching Islamic basics to Muslim children in minority contexts.",
+  "start_url": "/en",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FFFBEB",
+  "theme_color": "#FFC861",
+  "categories": ["education", "kids", "lifestyle"],
+  "lang": "en",
+  "dir": "auto",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/icons/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 import { Link } from '@/lib/i18n/navigation';
 
 interface AudienceSplitProps {
-  locale: 'en' | 'ar';
+  locale: 'en' | 'ar' | 'fr' | 'id';
   kidLabel: string;
   parentLabel: string;
 }

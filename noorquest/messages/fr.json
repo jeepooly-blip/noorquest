@@ -1,0 +1,58 @@
+{
+  "Landing": {
+    "title": "Aventures lumineuses dans la foi pour petits coeurs",
+    "subtitle": "Un endroit sûr et joyeux où les enfants musulmans apprennent, jouent et grandissent — avec leurs parents à leurs côtés.",
+    "btn_kid": "Je suis un enfant",
+    "btn_parent": "Je suis un parent",
+    "scholar_note": "Validé par des savants • Conforme COPPA et RGPD • Jamais de publicité"
+  },
+  "Map": {
+    "title": "Jardin de NoorQuest",
+    "sub": "Touche une zone pour jouer !",
+    "lumi_line": "Assalamu alaykum, Aisha ! Où allons-nous explorer aujourd'hui ?",
+    "lumi_line_2": "Chaque bonne action fait fleurir ton arbre Nour !",
+    "zone_market": "Marché",
+    "zone_market_sub": "Scanner Halal",
+    "zone_oasis": "Oasis",
+    "zone_oasis_sub": "Salat & Wudu",
+    "zone_grove": "Bosquet des histoires",
+    "zone_grove_sub": "Récits des Prophètes",
+    "zone_tree": "Arbre Nour",
+    "zone_tree_sub": "Tes récompenses",
+    "zone_gallery": "Galerie",
+    "zone_daily": "Quête du jour",
+    "zone_locked": "🔒 Termine 3 zones",
+    "zone_locked2": "🔒 Bientôt disponible"
+  },
+  "Halal": {
+    "title": "Scanner Halal",
+    "sub": "Glisse les aliments sur le scanner",
+    "shelf": "Étagère de courses",
+    "progress": "Progression",
+    "halal_found": "Halal trouvé",
+    "haram_avoided": "Haram évité",
+    "mushbooh_asked": "Demandé à Papa/Maman",
+    "badges": "Badges",
+    "lumi_intro": "Choisis un aliment et glisse-le ici !"
+  },
+  "Salah": {
+    "title": "Station Salat",
+    "sub": "Apprends le Wudu et la Salat étape par étape"
+  },
+  "Stories": {
+    "title": "Bosquet des histoires",
+    "sub": "Contes animés des Prophètes"
+  },
+  "Tree": {
+    "title": "Arbre Nour d'Aisha",
+    "sub": "Tes récompenses grandissent avec chaque bonne action"
+  },
+  "Common": {
+    "back": "Retour",
+    "next": "Suivant",
+    "prev": "Précédent",
+    "reset": "Réinitialiser",
+    "loading": "Chargement…",
+    "coming_soon": "Bientôt disponible"
+  }
+}

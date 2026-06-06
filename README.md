@@ -20,7 +20,10 @@ A joyful, safe, gamified web platform that teaches the basics of Islam to Muslim
 | [`docs/sample-content-archive.md`](docs/sample-content-archive.md) | Original sample dialogues and parent guides (preserved) |
 | [`prototypes/`](prototypes/) | 8 interactive HTML prototypes (no build step) |
 | [`noorquest/`](noorquest/) | Next.js 14 app — working MVP (Landing + Halal Scanner), deployed to Vercel |
+| [`noorquest/public/mascots/`](noorquest/public/mascots/) | Lumi the Lantern SVG assets (4 poses) |
 | [`.github/`](.github/) | Issue + PR templates, CI workflow |
+| [`.husky/`](.husky/) | Git hooks: pre-commit lint+typecheck, commit-msg commitlint |
+| [`scripts/`](scripts/) | Branch-protection JSON payloads |
 
 ---
 
@@ -128,12 +131,13 @@ Scholar-reviewed content remains the intellectual property of its authors and re
 
 ## 🗺️ Roadmap
 
-- [x] **v0.1** — PRD consolidation, prototypes, scaffold (this commit)
-- [ ] **v0.2 (MVP)** — Landing + Halal Scanner playable, EN + AR
+- [x] **v0.1** — PRD consolidation, prototypes, scaffold
+- [x] **v0.2 (MVP)** — Landing + Halal Scanner playable, EN + AR, deployed to Vercel
+- [x] **v0.2.1** — FR + ID locales, PWA + offline, Lumi mascot SVGs, SEO, branch protection, tests, PostHog
 - [ ] **v0.3** — Salah Station, Story Grove (3 stories)
 - [ ] **v0.4** — Parent Dashboard with progress tracking
 - [ ] **v0.5** — Community Gallery + sticker pen-pals (moderated)
-- [ ] **v0.6** — Premium tier + FR + ID
+- [ ] **v0.6** — Premium tier
 - [ ] **v1.0** — Public launch with scholar-review board
 
 ---

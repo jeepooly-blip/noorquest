@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" role="img" aria-label="Lumi the Lantern — happy">
+  <title>Lumi — happy</title>
+  <defs>
+    <radialGradient id="lumi-body-grad" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FFE9A8"/>
+      <stop offset="55%" stop-color="#FFC861"/>
+      <stop offset="100%" stop-color="#E89A2B"/>
+    </radialGradient>
+    <radialGradient id="lumi-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE17A" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#FFE17A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lumi-cap-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9E5A1F"/>
+      <stop offset="100%" stop-color="#6B3A0E"/>
+    </linearGradient>
+  </defs>
+
+  <!-- soft halo glow -->
+  <circle cx="100" cy="125" r="100" fill="url(#lumi-glow)"/>
+
+  <!-- metal cap with hanging ring -->
+  <rect x="64" y="34" width="72" height="22" rx="4" fill="url(#lumi-cap-grad)"/>
+  <rect x="62" y="52" width="76" height="8" rx="3" fill="#5A2F08"/>
+  <path d="M100 22 Q100 8 110 8" fill="none" stroke="#5A2F08" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="112" cy="8" r="5" fill="none" stroke="#5A2F08" stroke-width="4"/>
+
+  <!-- glass body -->
+  <ellipse cx="100" cy="140" rx="58" ry="74" fill="url(#lumi-body-grad)" stroke="#C77A1E" stroke-width="3"/>
+
+  <!-- inner flame -->
+  <path d="M100 96 Q88 118 92 138 Q100 152 100 168 Q100 152 108 138 Q112 118 100 96 Z" fill="#FF6B1A" opacity="0.85"/>
+  <path d="M100 110 Q94 126 96 140 Q100 150 100 162 Q100 150 104 140 Q106 126 100 110 Z" fill="#FFD24A"/>
+
+  <!-- sparkles -->
+  <g fill="#FFE17A">
+    <circle cx="48" cy="98" r="2.5"/>
+    <circle cx="152" cy="104" r="2.5"/>
+    <circle cx="60" cy="200" r="2"/>
+    <circle cx="148" cy="200" r="2"/>
+  </g>
+
+  <!-- face — closed happy eyes (^ ^) -->
+  <g stroke="#3A1A05" stroke-width="4" stroke-linecap="round" fill="none">
+    <path d="M76 132 Q82 124 88 132"/>
+    <path d="M112 132 Q118 124 124 132"/>
+  </g>
+
+  <!-- smile -->
+  <path d="M88 156 Q100 168 112 156" fill="none" stroke="#3A1A05" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- cheeks -->
+  <circle cx="74" cy="148" r="5" fill="#FF9D6E" opacity="0.6"/>
+  <circle cx="126" cy="148" r="5" fill="#FF9D6E" opacity="0.6"/>
+
+  <!-- base -->
+  <rect x="70" y="210" width="60" height="10" rx="3" fill="url(#lumi-cap-grad)"/>
+  <rect x="78" y="220" width="44" height="6" rx="2" fill="#3A1A05"/>
+</svg>

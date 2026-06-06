@@ -1,0 +1,58 @@
+{
+  "Landing": {
+    "title": "Petualangan Cahaya dalam Iman untuk Hati Kecil",
+    "subtitle": "Tempat yang aman dan penuh sukacita di mana anak-anak Muslim belajar, bermain, dan tumbuh — bersama orang tua mereka.",
+    "btn_kid": "Saya Anak",
+    "btn_parent": "Saya Orang Tua",
+    "scholar_note": "Ditinjau oleh ulama • Sesuai COPPA & GDPR-K • Tanpa iklan, selamanya"
+  },
+  "Map": {
+    "title": "Taman NoorQuest",
+    "sub": "Ketuk zona untuk bermain!",
+    "lumi_line": "Assalamu alaikum, Aisha! Mau menjelajah ke mana hari ini?",
+    "lumi_line_2": "Setiap kebaikan membuat Pohon Noormu bersemi!",
+    "zone_market": "Pasar",
+    "zone_market_sub": "Pemindai Halal",
+    "zone_oasis": "Oasis",
+    "zone_oasis_sub": "Salat & Wudu",
+    "zone_grove": "Hutan Cerita",
+    "zone_grove_sub": "Kisah Para Nabi",
+    "zone_tree": "Pohon Noor",
+    "zone_tree_sub": "Hadiahmu",
+    "zone_gallery": "Galeri",
+    "zone_daily": "Misi Harian",
+    "zone_locked": "🔒 Selesaikan 3 zona",
+    "zone_locked2": "🔒 Segera hadir"
+  },
+  "Halal": {
+    "title": "Pemindai Halal",
+    "sub": "Seret makanan ke pemindai",
+    "shelf": "Rak Belanja",
+    "progress": "Kemajuan",
+    "halal_found": "Halal ditemukan",
+    "haram_avoided": "Haram dihindari",
+    "mushbooh_asked": "Tanya Ayah/Ibu",
+    "badges": "Lencana",
+    "lumi_intro": "Pilih makanan dan seret ke sini!"
+  },
+  "Salah": {
+    "title": "Stasiun Salat",
+    "sub": "Pelajari Wudu dan Salat langkah demi langkah"
+  },
+  "Stories": {
+    "title": "Hutan Cerita",
+    "sub": "Kisah bergambar para Nabi"
+  },
+  "Tree": {
+    "title": "Pohon Noor Aisha",
+    "sub": "Hadiahmu tumbuh dengan setiap kebaikan"
+  },
+  "Common": {
+    "back": "Kembali",
+    "next": "Berikutnya",
+    "prev": "Sebelumnya",
+    "reset": "Atur ulang",
+    "loading": "Memuat…",
+    "coming_soon": "Segera hadir"
+  }
+}

@@ -1,22 +1,23 @@
-# dependencies
 node_modules/
 .pnp
 .pnp.js
-
-# testing
-coverage/
 
 # next.js
 .next/
 out/
 build/
-
-# production
 dist/
+
+# testing
+coverage/
+playwright-report/
+test-results/
+playwright/.cache/
 
 # misc
 .DS_Store
 *.pem
+Thumbs.db
 
 # debug
 npm-debug.log*
@@ -49,7 +50,8 @@ cms/strapi/.cache
 cms/strapi/public/uploads
 cms/strapi/node_modules
 
-# OS
-Thumbs.db
+# Vercel
+.vercel/
 
-.vercel
+# Husky (auto-managed)
+.husky/_/

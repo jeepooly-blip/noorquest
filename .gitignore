@@ -1,4 +1,6 @@
 # Dependencies
+node_modules/
+**/node_modules/
 noorquest/node_modules/
 noorquest/.next/
 noorquest/out/
@@ -6,6 +8,7 @@ noorquest/build/
 noorquest/dist/
 noorquest/.turbo/
 noorquest/coverage/
+**/coverage/
 
 # Env files
 .env
@@ -42,3 +45,15 @@ noorquest/cms/strapi/dist/
 noorquest/cms/strapi/.cache/
 noorquest/cms/strapi/public/uploads/
 noorquest/cms/strapi/node_modules/
+
+# Tests
+playwright-report/
+test-results/
+playwright/.cache/
+
+# Vercel
+.vercel
+**/.vercel
+
+# Husky internals
+.husky/_/
