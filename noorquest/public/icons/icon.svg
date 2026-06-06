@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FFE9A8"/>
+      <stop offset="100%" stop-color="#FFC861"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <g transform="translate(96 64)">
+    <rect x="50" y="40" width="120" height="36" rx="6" fill="#6B3A0E"/>
+    <rect x="46" y="70" width="128" height="14" rx="4" fill="#5A2F08"/>
+    <ellipse cx="160" cy="220" rx="100" ry="130" fill="#FFD980" stroke="#C77A1E" stroke-width="6"/>
+    <path d="M160 130 Q140 175 145 215 Q160 245 160 280 Q160 245 175 215 Q180 175 160 130 Z" fill="#FF6B1A"/>
+    <path d="M160 155 Q150 185 153 210 Q160 230 160 250 Q160 230 167 210 Q170 185 160 155 Z" fill="#FFD24A"/>
+    <g fill="#3A1A05">
+      <path d="M115 210 L122 198 L129 210 L142 210 L132 220 L137 232 L122 224 L107 232 L112 220 L102 210 Z"/>
+      <path d="M205 210 L212 198 L219 210 L232 210 L222 220 L227 232 L212 224 L197 232 L202 220 L192 210 Z"/>
+    </g>
+    <path d="M130 250 Q160 280 190 250 Q160 270 130 250 Z" fill="#3A1A05"/>
+  </g>
+  <text x="256" y="460" text-anchor="middle" font-family="Nunito, sans-serif" font-size="56" font-weight="800" fill="#3A1A05">NoorQuest</text>
+</svg>

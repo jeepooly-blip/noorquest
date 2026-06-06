@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" role="img" aria-label="Lumi the Lantern — celebrating">
+  <title>Lumi — celebrating</title>
+  <defs>
+    <radialGradient id="lumi-body-grad" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FFE9A8"/>
+      <stop offset="55%" stop-color="#FFC861"/>
+      <stop offset="100%" stop-color="#E89A2B"/>
+    </radialGradient>
+    <radialGradient id="lumi-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE17A" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#FFE17A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lumi-cap-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9E5A1F"/>
+      <stop offset="100%" stop-color="#6B3A0E"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="100" cy="125" r="105" fill="url(#lumi-glow)"/>
+
+  <!-- confetti rays -->
+  <g stroke="#FF6B1A" stroke-width="3" stroke-linecap="round" opacity="0.85">
+    <line x1="30" y1="40" x2="44" y2="58"/>
+    <line x1="170" y1="40" x2="156" y2="58"/>
+    <line x1="22" y1="100" x2="42" y2="100"/>
+    <line x1="178" y1="100" x2="158" y2="100"/>
+    <line x1="40" y1="20" x2="48" y2="32"/>
+    <line x1="160" y1="20" x2="152" y2="32"/>
+  </g>
+  <g fill="#FF6B1A">
+    <circle cx="32" cy="70" r="3"/>
+    <circle cx="168" cy="70" r="3"/>
+    <circle cx="56" cy="32" r="2.5"/>
+    <circle cx="144" cy="32" r="2.5"/>
+  </g>
+
+  <!-- tilted cap -->
+  <g transform="rotate(-6 100 100)">
+    <rect x="64" y="34" width="72" height="22" rx="4" fill="url(#lumi-cap-grad)"/>
+    <rect x="62" y="52" width="76" height="8" rx="3" fill="#5A2F08"/>
+    <path d="M100 22 Q100 8 110 8" fill="none" stroke="#5A2F08" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="112" cy="8" r="5" fill="none" stroke="#5A2F08" stroke-width="4"/>
+  </g>
+
+  <!-- glass body -->
+  <ellipse cx="100" cy="140" rx="58" ry="74" fill="url(#lumi-body-grad)" stroke="#C77A1E" stroke-width="3"/>
+
+  <!-- big flame -->
+  <path d="M100 88 Q82 116 88 142 Q100 158 100 178 Q100 158 112 142 Q118 116 100 88 Z" fill="#FF6B1A" opacity="0.9"/>
+  <path d="M100 106 Q92 124 94 140 Q100 152 100 168 Q100 152 106 140 Q108 124 100 106 Z" fill="#FFD24A"/>
+
+  <!-- face — star eyes -->
+  <g fill="#3A1A05">
+    <path d="M82 130 L85 124 L88 130 L94 130 L89 134 L91 140 L85 137 L79 140 L81 134 L76 130 Z"/>
+    <path d="M118 130 L121 124 L124 130 L130 130 L125 134 L127 140 L121 137 L115 140 L117 134 L112 130 Z"/>
+  </g>
+
+  <!-- big open smile -->
+  <path d="M84 152 Q100 174 116 152 Q100 168 84 152 Z" fill="#3A1A05"/>
+  <path d="M88 154 Q100 166 112 154" fill="#FF6B6B"/>
+
+  <!-- cheeks -->
+  <circle cx="72" cy="150" r="6" fill="#FF9D6E" opacity="0.7"/>
+  <circle cx="128" cy="150" r="6" fill="#FF9D6E" opacity="0.7"/>
+
+  <!-- base -->
+  <rect x="70" y="210" width="60" height="10" rx="3" fill="url(#lumi-cap-grad)"/>
+  <rect x="78" y="220" width="44" height="6" rx="2" fill="#3A1A05"/>
+</svg>

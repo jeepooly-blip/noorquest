@@ -1,26 +1,17 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { LumiSpeech } from '@/components/kid/LumiSpeech';
 
 export default async function MapPage({ params: { locale } }: { params: { locale: string } }) {
   setRequestLocale(locale);
   const t = await getTranslations('Map');
   return (
     <main className="mx-auto max-w-4xl px-4 pb-8">
-      <div className="flex items-center gap-3 px-0 py-4">
-        <div className="inline-block h-16 w-16 animate-bob">
-          <svg viewBox="0 0 64 64" className="drop-shadow-[0_0_12px_rgba(255,201,7,0.55)]">
-            <ellipse cx="32" cy="38" rx="22" ry="24" fill="#FFF8E7" stroke="#1A2A3A" strokeWidth="2" />
-            <ellipse cx="24" cy="34" rx="3" ry="3" fill="#1A2A3A" />
-            <ellipse cx="40" cy="34" rx="3" ry="3" fill="#1A2A3A" />
-            <circle cx="25" cy="33" r="1" fill="#fff" />
-            <circle cx="41" cy="33" r="1" fill="#fff" />
-            <path d="M26 44 Q32 48 38 44" stroke="#1A2A3A" strokeWidth="2" fill="none" strokeLinecap="round" />
-            <ellipse cx="32" cy="20" rx="6" ry="3" fill="#FFC107" />
-          </svg>
-        </div>
-        <div className="flex-1 rounded-2xl rounded-tl-none bg-white px-4 py-3 shadow-md">
-          <p className="font-semibold">{t('lumi_line')}</p>
-        </div>
-      </div>
+      <LumiSpeech
+        size={80}
+        pose="happy"
+        lines={[t('lumi_line'), t('lumi_line_2')]}
+        className="py-4"
+      />
       <h1 className="mb-2 text-center text-3xl font-extrabold">{t('title')}</h1>
       <p className="mb-6 text-center text-ink/60">{t('sub')}</p>
       <MapZones

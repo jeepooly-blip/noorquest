@@ -1,0 +1,25 @@
+{
+  "name": "noorquest-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NoorQuest monorepo root",
+  "scripts": {
+    "dev": "pnpm --filter noorquest dev",
+    "build": "pnpm --filter noorquest build",
+    "start": "pnpm --filter noorquest start",
+    "lint": "pnpm --filter noorquest lint",
+    "typecheck": "pnpm --filter noorquest typecheck",
+    "test": "pnpm --filter noorquest test",
+    "test:e2e": "pnpm --filter noorquest test:e2e",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "husky": "^9.1.7"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}
