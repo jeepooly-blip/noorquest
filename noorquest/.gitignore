@@ -51,3 +51,5 @@ cms/strapi/node_modules
 
 # OS
 Thumbs.db
+
+.vercel
