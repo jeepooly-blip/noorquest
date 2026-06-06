@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-cream text-ink;
+    font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+  }
+  /* Honor reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-sun-500 px-6 py-3 font-extrabold text-ink shadow-md transition-all hover:-translate-y-0.5 hover:bg-sun-300 hover:shadow-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sun-300 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-sky-600 px-6 py-3 font-extrabold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-sky-300 hover:text-ink hover:shadow-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-300 disabled:opacity-50;
+  }
+  .card {
+    @apply rounded-3xl bg-white p-5 shadow-md;
+  }
+  .touch-target {
+    @apply min-h-[48px] min-w-[48px];
+  }
+}

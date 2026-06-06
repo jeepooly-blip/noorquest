@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NoorQuest — Bright Adventures in Faith for Little Hearts</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          sky: { 50:'#EAF6FF', 300:'#7CC4F2', 600:'#1E88E5' },
+          sun: { 300:'#FFD966', 500:'#FFC107' },
+          sage: { 300:'#A8D5BA', 600:'#43A047' },
+          coral: { 300:'#FFAB91', 600:'#E64A19' },
+          cream: '#FFF8E7',
+          ink: '#1A2A3A'
+        },
+        fontFamily: {
+          kid: ['Nunito', 'system-ui', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Nunito', system-ui, sans-serif; }
+  .lumi-glow { filter: drop-shadow(0 0 24px rgba(255, 201, 7, 0.55)); }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  .lumi-bob { animation: bob 2.4s ease-in-out infinite; }
+  @keyframes float {
+    0%, 100% { transform: translate(0,0); }
+    50% { transform: translate(20px,-15px); }
+  }
+  .cloud { animation: float 8s ease-in-out infinite; }
+  .cloud-2 { animation: float 10s ease-in-out infinite reverse; }
+  html[dir="rtl"] .lumi-bob { animation-direction: reverse; }
+</style>
+</head>
+<body class="bg-cream min-h-screen text-ink overflow-x-hidden">
+
+<!-- Top bar -->
+<header class="absolute top-0 left-0 right-0 z-20 px-6 py-4 flex items-center justify-between">
+  <div class="flex items-center gap-2">
+    <div class="lumi-glow lumi-bob w-10 h-10">
+      <svg viewBox="0 0 64 64" class="w-full h-full">
+        <ellipse cx="32" cy="38" rx="22" ry="24" fill="#FFF8E7" stroke="#1A2A3A" stroke-width="2"/>
+        <circle cx="24" cy="34" r="3" fill="#1A2A3A"/>
+        <circle cx="40" cy="34" r="3" fill="#1A2A3A"/>
+        <circle cx="25" cy="33" r="1" fill="#fff"/>
+        <circle cx="41" cy="33" r="1" fill="#fff"/>
+        <path d="M26 44 Q32 48 38 44" stroke="#1A2A3A" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="32" cy="20" rx="6" ry="3" fill="#FFC107"/>
+        <line x1="32" y1="2" x2="32" y2="14" stroke="#1A2A3A" stroke-width="2"/>
+        <path d="M32 8 Q28 4 24 6" fill="none" stroke="#FFC107" stroke-width="2"/>
+      </svg>
+    </div>
+    <span class="font-extrabold text-2xl">NoorQuest</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <select id="lang" class="rounded-full px-3 py-1.5 bg-white shadow-sm border border-sky-300 text-sm font-semibold">
+      <option value="en">🇬🇧 English</option>
+      <option value="fr">🇫🇷 Français</option>
+      <option value="ar">🇸🇦 العربية</option>
+      <option value="id">🇮🇩 Indonesia</option>
+    </select>
+  </div>
+</header>
+
+<!-- Hero -->
+<main class="relative min-h-screen flex flex-col items-center justify-center px-6 py-24">
+  <!-- clouds -->
+  <div class="cloud absolute top-20 left-10 w-32 h-12 bg-white rounded-full opacity-70"></div>
+  <div class="cloud-2 absolute top-40 right-16 w-40 h-14 bg-white rounded-full opacity-60"></div>
+  <div class="cloud absolute bottom-32 left-1/4 w-28 h-10 bg-white rounded-full opacity-50"></div>
+
+  <div class="lumi-glow lumi-bob w-48 h-48 md:w-64 md:h-64 mb-8">
+    <svg viewBox="0 0 200 200" class="w-full h-full">
+      <!-- Lantern body -->
+      <ellipse cx="100" cy="115" rx="65" ry="70" fill="#FFF8E7" stroke="#1A2A3A" stroke-width="3"/>
+      <!-- Vertical lines -->
+      <path d="M70 60 Q70 115 70 170" stroke="#FFD966" stroke-width="2" fill="none" opacity="0.5"/>
+      <path d="M100 55 Q100 115 100 175" stroke="#FFD966" stroke-width="2" fill="none" opacity="0.5"/>
+      <path d="M130 60 Q130 115 130 170" stroke="#FFD966" stroke-width="2" fill="none" opacity="0.5"/>
+      <!-- Top cap -->
+      <ellipse cx="100" cy="55" rx="20" ry="8" fill="#FFC107" stroke="#1A2A3A" stroke-width="3"/>
+      <line x1="100" y1="10" x2="100" y2="45" stroke="#1A2A3A" stroke-width="3"/>
+      <!-- String -->
+      <path d="M100 12 Q90 6 78 10" fill="none" stroke="#FFC107" stroke-width="3"/>
+      <!-- Eyes -->
+      <ellipse cx="78" cy="105" rx="6" ry="9" fill="#1A2A3A"/>
+      <ellipse cx="122" cy="105" rx="6" ry="9" fill="#1A2A3A"/>
+      <circle cx="80" cy="100" r="2" fill="#fff"/>
+      <circle cx="124" cy="100" r="2" fill="#fff"/>
+      <!-- Cheeks -->
+      <circle cx="68" cy="125" r="6" fill="#FFAB91" opacity="0.5"/>
+      <circle cx="132" cy="125" r="6" fill="#FFAB91" opacity="0.5"/>
+      <!-- Smile -->
+      <path d="M85 135 Q100 148 115 135" stroke="#1A2A3A" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- Tiny hands waving -->
+      <ellipse cx="40" cy="125" rx="10" ry="14" fill="#FFF8E7" stroke="#1A2A3A" stroke-width="3" transform="rotate(-20 40 125)"/>
+      <ellipse cx="160" cy="125" rx="10" ry="14" fill="#FFF8E7" stroke="#1A2A3A" stroke-width="3" transform="rotate(20 160 125)"/>
+    </svg>
+  </div>
+
+  <h1 class="text-4xl md:text-6xl font-extrabold text-center mb-4" data-i18n="hero_title">Bright Adventures in Faith<br/>for Little Hearts</h1>
+  <p class="text-lg md:text-xl text-ink/70 text-center max-w-xl mb-12" data-i18n="hero_subtitle">
+    A safe, joyful place where Muslim children learn, play, and grow — with their parents by their side.
+  </p>
+
+  <div class="flex flex-col sm:flex-row gap-6">
+    <a href="kids-map.html" class="group bg-sun-500 hover:bg-sun-300 text-ink font-extrabold text-2xl rounded-3xl px-12 py-8 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 flex items-center gap-3">
+      <span class="text-3xl">🌟</span>
+      <span data-i18n="btn_kid">I'm a Kid</span>
+    </a>
+    <a href="parent-dashboard.html" class="group bg-sky-600 hover:bg-sky-300 text-white hover:text-ink font-extrabold text-2xl rounded-3xl px-12 py-8 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 flex items-center gap-3">
+      <span class="text-3xl">👨‍👩‍👧</span>
+      <span data-i18n="btn_parent">I'm a Parent</span>
+    </a>
+  </div>
+
+  <p class="mt-16 text-sm text-ink/50" data-i18n="scholar_note">Scholar-reviewed • COPPA & GDPR-K compliant • No ads, ever</p>
+</main>
+
+<!-- I18N -->
+<script>
+  const I18N = {
+    en: {
+      hero_title: 'Bright Adventures in Faith<br/>for Little Hearts',
+      hero_subtitle: "A safe, joyful place where Muslim children learn, play, and grow — with their parents by their side.",
+      btn_kid: "I'm a Kid",
+      btn_parent: "I'm a Parent",
+      scholar_note: "Scholar-reviewed • COPPA & GDPR-K compliant • No ads, ever"
+    },
+    fr: {
+      hero_title: 'Aventures lumineuses dans la foi<br/>pour petits cœurs',
+      hero_subtitle: "Un endroit sûr et joyeux où les enfants musulmans apprennent, jouent et grandissent — avec leurs parents.",
+      btn_kid: "Je suis un enfant",
+      btn_parent: "Je suis un parent",
+      scholar_note: "Revu par des savants • Conforme COPPA et RGPD • Jamais de publicité"
+    },
+    ar: {
+      hero_title: 'مغامرات نور في الإيمان<br/>للقلوب الصغيرة',
+      hero_subtitle: "مكان آمن ومبهج يتعلم فيه أطفالنا المسلمون ويلعبون وينمون — مع أهاليهم.",
+      btn_kid: "أنا طفل",
+      btn_parent: "أنا ولي أمر",
+      scholar_note: "مراجعة من العلماء • متوافقة مع COPPA وGDPR-K • لا إعلانات أبداً"
+    },
+    id: {
+      hero_title: 'Petualangan Cahaya dalam Iman<br/>untuk Hati Kecil',
+      hero_subtitle: "Tempat yang aman dan menyenangkan di mana anak-anak Muslim belajar, bermain, dan tumbuh — bersama orang tua mereka.",
+      btn_kid: "Saya Anak",
+      btn_parent: "Saya Orang Tua",
+      scholar_note: "Ditinjau oleh ulama • Sesuai COPPA & GDPR-K • Tanpa iklan"
+    }
+  };
+  const langSel = document.getElementById('lang');
+  function applyLang(l) {
+    const dict = I18N[l] || I18N.en;
+    document.documentElement.lang = l;
+    document.documentElement.dir = (l === 'ar') ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (dict[k]) el.innerHTML = dict[k];
+    });
+  }
+  langSel.addEventListener('change', e => applyLang(e.target.value));
+  applyLang('en');
+</script>
+</body>
+</html>

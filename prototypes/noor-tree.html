@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NoorQuest — Noor Tree</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: { sky:{50:'#EAF6FF',300:'#7CC4F2',600:'#1E88E5'}, sun:{300:'#FFD966',500:'#FFC107'}, sage:{300:'#A8D5BA',600:'#43A047'}, coral:{300:'#FFAB91',600:'#E64A19'}, cream:'#FFF8E7', ink:'#1A2A3A'}
+  }}}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Nunito', system-ui, sans-serif; }
+  @keyframes sway { 0%,100%{transform:rotate(-2deg)} 50%{transform:rotate(2deg)} }
+  .tree-sway { transform-origin: 50% 100%; animation: sway 4s ease-in-out infinite; }
+  .badge-card { transition: transform .2s; }
+  .badge-card:hover { transform: scale(1.1) rotate(-3deg); }
+  .fruit { transition: all .5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+</style>
+</head>
+<body class="bg-gradient-to-b from-sky-50 via-cream to-sage-300 min-h-screen text-ink">
+
+<header class="bg-white shadow-sm px-4 py-3 flex items-center gap-3 sticky top-0 z-20">
+  <a href="kids-map.html" class="text-2xl">←</a>
+  <div class="text-2xl">🌳</div>
+  <div class="flex-1">
+    <div class="font-extrabold" data-i18n="title">Aisha's Noor Tree</div>
+    <div class="text-xs text-ink/60" data-i18n="sub">Your rewards grow with every good deed</div>
+  </div>
+  <select id="lang" class="rounded-full px-2 py-1 bg-sky-50 text-sm font-semibold">
+    <option value="en">🇬🇧</option><option value="fr">🇫🇷</option><option value="ar">🇸🇦</option><option value="id">🇮🇩</option>
+  </select>
+</header>
+
+<main class="max-w-5xl mx-auto p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+  <!-- Tree visualization -->
+  <section class="bg-white rounded-3xl shadow-lg p-6 flex flex-col items-center">
+    <h2 class="text-2xl font-extrabold mb-2" data-i18n="level">Level 3</h2>
+    <p class="text-ink/60 text-sm mb-4" data-i18n="xp">240 / 500 XP</p>
+    <div class="relative w-64 h-80">
+      <svg viewBox="0 0 200 280" class="w-full h-full tree-sway">
+        <!-- Ground -->
+        <ellipse cx="100" cy="270" rx="80" ry="10" fill="#A8D5BA"/>
+        <!-- Trunk -->
+        <path d="M90 270 L90 180 Q90 170 100 170 Q110 170 110 180 L110 270 Z" fill="#8B5A2B"/>
+        <!-- Branches -->
+        <path d="M100 180 L70 140" stroke="#8B5A2B" stroke-width="6" stroke-linecap="round"/>
+        <path d="M100 180 L130 140" stroke="#8B5A2B" stroke-width="6" stroke-linecap="round"/>
+        <path d="M100 170 L100 100" stroke="#8B5A2B" stroke-width="6" stroke-linecap="round"/>
+        <!-- Leaves / canopy -->
+        <circle id="c1" cx="70"  cy="120" r="38" fill="#43A047"/>
+        <circle id="c2" cx="130" cy="120" r="38" fill="#43A047"/>
+        <circle id="c3" cx="100" cy="80"  r="42" fill="#43A047"/>
+        <circle id="c4" cx="100" cy="100" r="35" fill="#66BB6A"/>
+        <!-- Fruits (scale with level) -->
+        <g id="fruits"></g>
+        <!-- Sparkles -->
+        <g id="sparkles"></g>
+      </svg>
+    </div>
+    <div class="text-center mt-2">
+      <div class="text-4xl">🌟</div>
+      <div class="font-bold text-sage-600" data-i18n="growing">Growing strong, mashaAllah!</div>
+    </div>
+  </section>
+
+  <!-- Badges + Avatar -->
+  <section class="space-y-4">
+    <div class="bg-white rounded-3xl shadow-md p-5">
+      <h3 class="font-extrabold text-lg mb-3" data-i18n="badges">Badges</h3>
+      <div class="grid grid-cols-4 gap-3" id="badges"></div>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-md p-5">
+      <h3 class="font-extrabold text-lg mb-3" data-i18n="avatar">Your Avatar</h3>
+      <div class="flex items-center gap-4">
+        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-sun-300 to-sun-500 flex items-center justify-center text-5xl">👧</div>
+        <div class="flex-1 space-y-2">
+          <div class="font-bold">Aisha</div>
+          <div class="grid grid-cols-3 gap-2 text-center text-xs">
+            <button class="badge-card bg-sky-50 rounded-xl p-2">🧕<br/><span data-i18n="scarf">Scarf</span></button>
+            <button class="badge-card bg-sage-300 rounded-xl p-2">🌙<br/><span data-i18n="lantern">Lantern</span></button>
+            <button class="badge-card bg-coral-300 rounded-xl p-2">🐦<br/><span data-i18n="pet">Pet</span></button>
+          </div>
+        </div>
+      </div>
+      <p class="text-xs text-ink/50 mt-3" data-i18n="locked">More items unlock at higher levels</p>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-md p-5">
+      <h3 class="font-extrabold text-lg mb-3" data-i18n="stats">Stats</h3>
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between"><span data-i18n="halal_scans">Halal scans</span><span class="font-bold text-sage-600">12</span></div>
+        <div class="flex justify-between"><span data-i18n="stories">Stories listened</span><span class="font-bold text-sun-500">3</span></div>
+        <div class="flex justify-between"><span data-i18n="salah">Salah steps</span><span class="font-bold text-sky-600">8</span></div>
+        <div class="flex justify-between"><span data-i18n="streak">Day streak</span><span class="font-bold text-coral-600">5 🔥</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+const BADGES = [
+  { id:'b1', emoji:'⭐', name:'First Scan',     unlocked:true },
+  { id:'b2', emoji:'🌙', name:'Wudu Star',      unlocked:true },
+  { id:'b3', emoji:'📖', name:'Story Listener', unlocked:true },
+  { id:'b4', emoji:'🔥', name:'On Fire',        unlocked:true },
+  { id:'b5', emoji:'🛡️', name:'Smart Picker',   unlocked:false },
+  { id:'b6', emoji:'🤔', name:'Asks Parents',   unlocked:false },
+  { id:'b7', emoji:'🎨', name:'Artist',         unlocked:false },
+  { id:'b8', emoji:'🌟', name:'Halal Hero',     unlocked:false }
+];
+const badgeEl = document.getElementById('badges');
+BADGES.forEach(b => {
+  const el = document.createElement('div');
+  el.className = 'badge-card aspect-square rounded-2xl flex flex-col items-center justify-center text-center p-2 ' + (b.unlocked?'bg-sun-300/40':'bg-gray-200 opacity-50');
+  el.innerHTML = `<div class="text-3xl">${b.unlocked?b.emoji:'🔒'}</div><div class="text-[10px] font-bold mt-1">${b.name}</div>`;
+  badgeEl.appendChild(el);
+});
+
+// Add fruits based on level (level 3 of 5)
+const fruits = document.getElementById('fruits');
+const positions = [[100,60],[70,100],[130,100],[100,110],[70,140],[130,140],[100,140]];
+positions.slice(0, 5).forEach(([x,y], i) => {
+  const f = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  f.setAttribute('cx', x); f.setAttribute('cy', y); f.setAttribute('r', 7);
+  f.setAttribute('fill', ['#FFD966','#FF6B6B','#FFC107','#43A047','#1E88E5'][i]);
+  f.classList.add('fruit');
+  fruits.appendChild(f);
+});
+
+const I18N = {
+  en: { title:"Aisha's Noor Tree", sub:'Your rewards grow with every good deed', level:'Level 3', xp:'240 / 500 XP', growing:'Growing strong, mashaAllah!', badges:'Badges', avatar:'Your Avatar', scarf:'Scarf', lantern:'Lantern', pet:'Pet', locked:'More items unlock at higher levels', stats:'Stats', halal_scans:'Halal scans', stories:'Stories listened', salah:'Salah steps', streak:'Day streak' },
+  fr: { title:"Arbre Noor d'Aisha", sub:'Tes récompenses grandissent à chaque bonne action', level:'Niveau 3', xp:'240 / 500 XP', growing:'Tu grandis fort, mashaAllah !', badges:'Badges', avatar:'Ton avatar', scarf:'Foulard', lantern:'Lanterne', pet:'Animal', locked:'Plus d\'objets à venir', stats:'Stats', halal_scans:'Scans Halal', stories:'Histoires écoutées', salah:'Étapes Salah', streak:'Série de jours' },
+  ar: { title:'شجرة نور لعائشة', sub:'جوائزك تنمو مع كل عمل صالح', level:'المستوى 3', xp:'240 / 500 خبرة', growing:'تكبرين بقوة، ما شاء الله!', badges:'الشارات', avatar:'صورتك', scarf:'حجاب', lantern:'فانوس', pet:'حيوان', locked:'المزيد من العناصر لاحقاً', stats:'إحصائيات', halal_scans:'عمليات مسح الحلال', stories:'قصص استمعت إليها', salah:'خطوات الصلاة', streak:'أيام متتالية' },
+  id: { title:'Pohon Noor Aisha', sub:'Hadiahmu tumbuh dengan setiap kebaikan', level:'Level 3', xp:'240 / 500 XP', growing:'Tumbuh kuat, mashaAllah!', badges:'Lencana', avatar:'Avatar', scarf:'Kerudung', lantern:'Lentera', pet:'Hewan', locked:'Lebih banyak item di level tinggi', stats:'Statistik', halal_scans:'Pemindaian Halal', stories:'Cerita didengar', salah:'Langkah Shalat', streak:'Streak hari' }
+};
+const ls = document.getElementById('lang');
+function apply(l) {
+  const d = I18N[l]||I18N.en;
+  document.documentElement.lang = l; document.documentElement.dir = (l==='ar')?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(e => { const k=e.getAttribute('data-i18n'); if(d[k]) e.textContent=d[k]; });
+}
+ls.addEventListener('change', e => apply(e.target.value));
+apply('en');
+</script>
+</body>
+</html>

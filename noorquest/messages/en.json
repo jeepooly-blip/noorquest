@@ -1,0 +1,57 @@
+{
+  "Landing": {
+    "title": "Bright Adventures in Faith for Little Hearts",
+    "subtitle": "A safe, joyful place where Muslim children learn, play, and grow — with their parents by their side.",
+    "btn_kid": "I'm a Kid",
+    "btn_parent": "I'm a Parent",
+    "scholar_note": "Scholar-reviewed • COPPA & GDPR-K compliant • No ads, ever"
+  },
+  "Map": {
+    "title": "NoorQuest Garden",
+    "sub": "Tap a zone to play!",
+    "lumi_line": "Assalamu alaikum, Aisha! Where shall we explore today?",
+    "zone_market": "Market",
+    "zone_market_sub": "Halal Scanner",
+    "zone_oasis": "Oasis",
+    "zone_oasis_sub": "Salah & Wudu",
+    "zone_grove": "Story Grove",
+    "zone_grove_sub": "Prophet tales",
+    "zone_tree": "Noor Tree",
+    "zone_tree_sub": "Your rewards",
+    "zone_gallery": "Gallery",
+    "zone_daily": "Daily Quest",
+    "zone_locked": "🔒 Complete 3 zones",
+    "zone_locked2": "🔒 Coming soon"
+  },
+  "Halal": {
+    "title": "Halal Scanner",
+    "sub": "Drag foods onto the scanner",
+    "shelf": "Grocery Shelf",
+    "progress": "Progress",
+    "halal_found": "Halal found",
+    "haram_avoided": "Haram avoided",
+    "mushbooh_asked": "Asked Mom/Dad",
+    "badges": "Badges",
+    "lumi_intro": "Pick a food and drag it here!"
+  },
+  "Salah": {
+    "title": "Salah Station",
+    "sub": "Learn Wudu and Salah step by step"
+  },
+  "Stories": {
+    "title": "Story Grove",
+    "sub": "Animated tales of the Prophets"
+  },
+  "Tree": {
+    "title": "Aisha's Noor Tree",
+    "sub": "Your rewards grow with every good deed"
+  },
+  "Common": {
+    "back": "Back",
+    "next": "Next",
+    "prev": "Previous",
+    "reset": "Reset",
+    "loading": "Loading…",
+    "coming_soon": "Coming soon"
+  }
+}

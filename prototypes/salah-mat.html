@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NoorQuest — Salah Mat</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: { sky:{50:'#EAF6FF',300:'#7CC4F2',600:'#1E88E5'}, sun:{300:'#FFD966',500:'#FFC107'}, sage:{300:'#A8D5BA',600:'#43A047'}, coral:{300:'#FFAB91',600:'#E64A19'}, cream:'#FFF8E7', ink:'#1A2A3A'}
+  }}}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Nunito', system-ui, sans-serif; }
+  .step-card { transition: all .3s; }
+  .step-card.active { background: #FFD966; transform: scale(1.05); }
+  .step-card.done { background: #A8D5BA; }
+  .position { transition: all .5s; }
+  .mat-stand { display: flex; align-items: flex-end; justify-content: center; }
+  .char-stand { width: 60px; height: 110px; background: linear-gradient(180deg, #7CC4F2 0%, #7CC4F2 40%, #1E88E5 40%, #1E88E5 100%); border-radius: 30px 30px 8px 8px; position: relative; }
+  .char-stand::before { content: ''; position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 36px; height: 36px; background: #FFE0B2; border-radius: 50%; }
+  .char-bow { width: 80px; height: 60px; background: #7CC4F2; border-radius: 40px; position: relative; }
+  .char-bow::before { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 70px; height: 16px; background: #1E88E5; border-radius: 8px; }
+  .char-bow::after { content: ''; position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 36px; height: 36px; background: #FFE0B2; border-radius: 50%; }
+  .char-sujud { width: 100px; height: 30px; background: #7CC4F2; border-radius: 15px; position: relative; }
+  .char-sujud::before { content: ''; position: absolute; left: 20px; top: -10px; width: 24px; height: 24px; background: #FFE0B2; border-radius: 50%; }
+  .char-sit { width: 80px; height: 60px; background: #7CC4F2; border-radius: 8px; position: relative; }
+  .char-sit::before { content: ''; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 32px; height: 32px; background: #FFE0B2; border-radius: 50%; }
+  @keyframes pulse-glow { 0%,100%{box-shadow:0 0 0 0 rgba(255,201,7,0.7)} 50%{box-shadow:0 0 0 20px rgba(255,201,7,0)} }
+  .pulse { animation: pulse-glow 1.5s infinite; border-radius: 9999px; }
+</style>
+</head>
+<body class="bg-gradient-to-b from-sky-50 to-cream min-h-screen text-ink">
+
+<header class="bg-white shadow-sm px-4 py-3 flex items-center gap-3 sticky top-0 z-20">
+  <a href="kids-map.html" class="text-2xl">←</a>
+  <div class="text-2xl">🕌</div>
+  <div class="flex-1">
+    <div class="font-extrabold" data-i18n="title">Salah Station</div>
+    <div class="text-xs text-ink/60" data-i18n="sub">Learn Wudu and Salah step by step</div>
+  </div>
+  <select id="lang" class="rounded-full px-2 py-1 bg-sky-50 text-sm font-semibold">
+    <option value="en">🇬🇧</option><option value="fr">🇫🇷</option><option value="ar">🇸🇦</option><option value="id">🇮🇩</option>
+  </select>
+</header>
+
+<main class="max-w-5xl mx-auto p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+
+  <!-- Steps sidebar -->
+  <section class="bg-white rounded-3xl shadow-md p-4 md:col-span-1">
+    <h2 class="font-extrabold text-lg mb-3" data-i18n="wudu">Wudu Steps</h2>
+    <ol id="wudu-steps" class="space-y-2 mb-6"></ol>
+    <h2 class="font-extrabold text-lg mb-3" data-i18n="salah">Salah Positions</h2>
+    <ol id="salah-steps" class="space-y-2"></ol>
+    <button id="reset" class="mt-4 w-full bg-coral-300 text-ink font-bold py-2 rounded-2xl" data-i18n="reset">↻ Reset</button>
+  </section>
+
+  <!-- Prayer mat visualization -->
+  <section class="bg-white rounded-3xl shadow-md p-6 md:col-span-2 flex flex-col items-center">
+    <div id="lumi-tip" class="bg-sun-300/30 rounded-2xl p-3 mb-4 text-center max-w-md">
+      <p class="text-sm font-semibold" data-i18n="tip1">Let's start with Wudu! Tap the first step.</p>
+    </div>
+
+    <div class="relative w-full max-w-md h-80 rounded-3xl overflow-hidden" style="background: linear-gradient(180deg, #EAF6FF 0%, #EAF6FF 60%, #C8E6F5 60%, #C8E6F5 100%);">
+      <!-- Mat -->
+      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-44 rounded-t-3xl" style="background: repeating-linear-gradient(45deg, #1E88E5, #1E88E5 4px, #1565C0 4px, #1565C0 8px); border: 4px solid #FFD966;"></div>
+      <!-- Character -->
+      <div id="character" class="absolute bottom-16 left-1/2 -translate-x-1/2 mat-stand">
+        <div class="char-stand"></div>
+      </div>
+      <!-- Mihrab indicator -->
+      <div class="absolute top-4 left-1/2 -translate-x-1/2 text-3xl pulse">🕋</div>
+    </div>
+
+    <div class="flex gap-3 mt-4">
+      <button id="prev" class="bg-sky-50 hover:bg-sky-300 text-ink font-bold px-6 py-3 rounded-2xl" data-i18n="prev">← Previous</button>
+      <button id="next" class="bg-sun-500 hover:bg-sun-300 text-ink font-bold px-6 py-3 rounded-2xl" data-i18n="next">Next →</button>
+    </div>
+    <p class="text-xs text-ink/50 mt-2" data-i18n="audio">🔊 Audio plays on each step</p>
+  </section>
+</main>
+
+<script>
+const WUDU = [
+  { id:'w1', icon:'🤲', en:'Bismillah — begin in Allah\'s name', fr:'Bismillah — commence au nom d\'Allah', ar:'بسم الله — ابدئي باسم الله', idn:'Bismillah — mulai dengan nama Allah' },
+  { id:'w2', icon:'🧼', en:'Wash hands 3 times', fr:'Lave tes mains 3 fois', ar:'اغسلي يديك 3 مرات', idn:'Cuci tangan 3 kali' },
+  { id:'w3', icon:'💧', en:'Rinse mouth 3 times', fr:'Rince ta bouche 3 fois', ar:'تمضمضي 3 مرات', idn:'Kumur 3 kali' },
+  { id:'w4', icon:'👃', en:'Clean nose 3 times', fr:'Nettoie ton nez 3 fois', ar:'استنشقي 3 مرات', idn:'Bersihkan hidung 3 kali' },
+  { id:'w5', icon:'😊', en:'Wash face 3 times', fr:'Lave ton visage 3 fois', ar:'اغسلي وجهك 3 مرات', idn:'Cuci wajah 3 kali' },
+  { id:'w6', icon:'💪', en:'Wash arms to elbows 3 times', fr:'Lave les bras jusqu\'aux coudes 3 fois', ar:'اغسلي ذراعيك 3 مرات', idn:'Cuci lengan 3 kali' },
+  { id:'w7', icon:'🧕', en:'Wipe head once', fr:'Essuie ta tête une fois', ar:'امسحي رأسك مرة', idn:'Usap kepala sekali' },
+  { id:'w8', icon:'🦶', en:'Wash feet to ankles 3 times', fr:'Lave les pieds jusqu\'aux chevilles 3 fois', ar:'اغسلي قدميك 3 مرات', idn:'Cuci kaki 3 kali' }
+];
+const POSITIONS = [
+  { id:'p1', icon:'🙌', en:'Takbir — hands to ears', fr:'Takbir — mains aux oreilles', ar:'تكبير — اليدان إلى الأذنين', idn:'Takbir — tangan ke telinga', char:'stand' },
+  { id:'p2', icon:'📖', en:'Qiyam — standing, recite Al-Fatiha', fr:'Qiyam — debout, récite Al-Fatiha', ar:'قيام — وقوفي، اقرأي الفاتحة', idn:'Qiyam — berdiri, baca Al-Fatiha', char:'stand' },
+  { id:'p3', icon:'🙇', en:'Ruku — bowing, "Subhana Rabbiyal Adheem" 3x', fr:'Ruku — inclinaison, "Subhana Rabbiyal Adheem" 3x', ar:'ركوع — انحناء، سبحان ربي العظيم 3 مرات', idn:'Ruku — rukuk, "Subhana Rabbiyal Adheem" 3x', char:'bow' },
+  { id:'p4', icon:'🕌', en:'Sujud — forehead on ground, "Subhana Rabbiyal A\'la" 3x', fr:'Sujud — front sur le sol, "Subhana Rabbiyal A\'la" 3x', ar:'سجود — الجبين على الأرض، سبحان ربي الأعلى 3 مرات', idn:'Sujud — kening ke tanah, "Subhana Rabbiyal A\'la" 3x', char:'sujud' },
+  { id:'p5', icon:'🪑', en:'Tashahhud — sitting, finger raised, shahada', fr:'Tashahhud — assis, doigt levé, shahada', ar:'تشهد — جلوس، رفع السبابة، الشهادة', idn:'Tashahhud — duduk, angkat jari, syahadat', char:'sit' },
+  { id:'p6', icon:'👋', en:'Salam — "Assalamu alaikum" right then left', fr:'Salam — "Assalamu alaikum" à droite puis à gauche', ar:'السلام — "السلام عليكم" يميناً ثم يساراً', idn:'Salam — "Assalamu alaikum" ke kanan lalu kiri', char:'sit' }
+];
+const TIPS = {
+  en:['Let\'s start with Wudu! Tap the first step.','MashaAllah! You did the Wudu steps!','Now let\'s learn Salah positions!','MashaAllah! You completed one rak\'at!','You are ready to pray with Lumi!'],
+  fr:['Commençons par le Wudu ! Touche la première étape.','MashaAllah ! Tu as fait le Wudu !','Maintenant les positions de la Salah !','MashaAllah ! Tu as fait un rak\'at !','Tu es prêt à prier avec Lumi !'],
+  ar:['لنبدأ بالوضوء! انقري على الخطوة الأولى.','ما شاء الله! أتممتِ الوضوء!','الآن لنتعلم مواقف الصلاة!','ما شاء الله! أتممتِ ركعة!','أنتِ مستعدة للصلاة مع لومي!'],
+  id:['Mulai dengan Wudu! Ketuk langkah pertama.','MashaAllah! Kamu sudah Wudu!','Sekarang posisi Shalat!','MashaAllah! Satu rak\'at selesai!','Kamu siap shalat dengan Lumi!']
+};
+let state = { phase:'wudu', idx:0, lang:'en' };
+
+function render() {
+  const wuduEl = document.getElementById('wudu-steps');
+  wuduEl.innerHTML = '';
+  WUDU.forEach((s, i) => {
+    const li = document.createElement('li');
+    li.className = 'step-card rounded-2xl p-3 flex items-center gap-3 cursor-pointer ' +
+      (state.phase==='wudu' && state.idx===i ? 'active' : '') +
+      (state.phase==='salah' || (state.phase==='wudu' && state.idx>i) ? 'done' : '');
+    li.innerHTML = `<span class="text-2xl">${s.icon}</span><span class="text-sm font-semibold">${s[state.lang]||s.en}</span>${(state.phase==='wudu' && state.idx>i)?'<span class="ml-auto">✓</span>':''}`;
+    li.onclick = () => { state.phase='wudu'; state.idx=i; render(); };
+    wuduEl.appendChild(li);
+  });
+  const salahEl = document.getElementById('salah-steps');
+  salahEl.innerHTML = '';
+  POSITIONS.forEach((s, i) => {
+    const li = document.createElement('li');
+    li.className = 'step-card rounded-2xl p-3 flex items-center gap-3 cursor-pointer ' +
+      (state.phase==='salah' && state.idx===i ? 'active' : '') +
+      (state.phase==='salah' && state.idx>i ? 'done' : '');
+    li.innerHTML = `<span class="text-2xl">${s.icon}</span><span class="text-sm font-semibold">${s[state.lang]||s.en}</span>`;
+    li.onclick = () => { state.phase='salah'; state.idx=i; render(); };
+    salahEl.appendChild(li);
+  });
+  // Character
+  const ch = document.getElementById('character');
+  if (state.phase==='wudu') {
+    ch.innerHTML = '<div class="char-stand"></div>';
+  } else {
+    const p = POSITIONS[state.idx];
+    ch.innerHTML = `<div class="char-${p.char}"></div>`;
+  }
+  // Tip
+  const tipIdx = state.phase==='wudu' ? Math.min(state.idx, 1) : 2 + Math.min(state.idx, 2);
+  document.getElementById('lumi-tip').querySelector('p').textContent = TIPS[state.lang][tipIdx];
+}
+
+document.getElementById('next').onclick = () => {
+  if (state.phase==='wudu' && state.idx < WUDU.length-1) state.idx++;
+  else if (state.phase==='wudu') { state.phase='salah'; state.idx=0; }
+  else if (state.idx < POSITIONS.length-1) state.idx++;
+  render();
+};
+document.getElementById('prev').onclick = () => {
+  if (state.phase==='salah' && state.idx > 0) state.idx--;
+  else if (state.phase==='salah') { state.phase='wudu'; state.idx=WUDU.length-1; }
+  else if (state.idx > 0) state.idx--;
+  render();
+};
+document.getElementById('reset').onclick = () => { state.phase='wudu'; state.idx=0; render(); };
+
+const I18N = {
+  en:{ title:'Salah Station', sub:'Learn Wudu and Salah step by step', wudu:'Wudu Steps', salah:'Salah Positions', reset:'↻ Reset', tip1:'Let\'s start with Wudu! Tap the first step.', prev:'← Previous', next:'Next →', audio:'🔊 Audio plays on each step' },
+  fr:{ title:'Station Salah', sub:'Apprends le Wudu et la Salah pas à pas', wudu:'Étapes du Wudu', salah:'Positions de la Salah', reset:'↻ Réinitialiser', tip1:'Commençons par le Wudu ! Touche la première étape.', prev:'← Précédent', next:'Suivant →', audio:'🔊 Audio à chaque étape' },
+  ar:{ title:'محطة الصلاة', sub:'تعلمي الوضوء والصلاة خطوة بخطوة', wudu:'خطوات الوضوء', salah:'مواقف الصلاة', reset:'↻ إعادة', tip1:'لنبدأ بالوضوء! انقري على الخطوة الأولى.', prev:'→ السابق', next:'التالي ←', audio:'🔊 صوت في كل خطوة' },
+  id:{ title:'Stasiun Shalat', sub:'Pelajari Wudu dan Shalat langkah demi langkah', wudu:'Langkah Wudu', salah:'Posisi Shalat', reset:'↻ Ulang', tip1:'Mulai dengan Wudu! Ketuk langkah pertama.', prev:'← Sebelumnya', next:'Selanjutnya →', audio:'🔊 Audio di setiap langkah' }
+};
+const ls = document.getElementById('lang');
+function applyLang(l) {
+  state.lang = l;
+  const d = I18N[l]||I18N.en;
+  document.documentElement.lang = l; document.documentElement.dir = (l==='ar')?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(e => { const k=e.getAttribute('data-i18n'); if(d[k]) e.textContent=d[k]; });
+  render();
+}
+ls.addEventListener('change', e => applyLang(e.target.value));
+applyLang('en');
+</script>
+</body>
+</html>

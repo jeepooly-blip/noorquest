@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NoorQuest — Story Grove</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: { sky:{50:'#EAF6FF',300:'#7CC4F2',600:'#1E88E5'}, sun:{300:'#FFD966',500:'#FFC107'}, sage:{300:'#A8D5BA',600:'#43A047'}, coral:{300:'#FFAB91',600:'#E64A19'}, cream:'#FFF8E7', ink:'#1A2A3A'}
+  }}}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Nunito', system-ui, sans-serif; }
+  .word { transition: color .2s; }
+  .word.active { color: #FFC107; background: #FFC10733; border-radius: 4px; padding: 0 4px; }
+  .story-card { transition: transform .2s; }
+  .story-card:hover { transform: translateY(-4px); }
+</style>
+</head>
+<body class="bg-gradient-to-b from-sun-300/30 via-cream to-sky-50 min-h-screen text-ink">
+
+<header class="bg-white shadow-sm px-4 py-3 flex items-center gap-3 sticky top-0 z-20">
+  <a href="kids-map.html" class="text-2xl">←</a>
+  <div class="text-2xl">📖</div>
+  <div class="flex-1">
+    <div class="font-extrabold" data-i18n="title">Story Grove</div>
+    <div class="text-xs text-ink/60" data-i18n="sub">Animated tales of the Prophets</div>
+  </div>
+  <select id="lang" class="rounded-full px-2 py-1 bg-sky-50 text-sm font-semibold">
+    <option value="en">🇬🇧</option><option value="fr">🇫🇷</option><option value="ar">🇸🇦</option><option value="id">🇮🇩</option>
+  </select>
+</header>
+
+<!-- Story selector -->
+<section id="selector" class="max-w-5xl mx-auto p-4">
+  <h2 class="text-2xl font-extrabold mb-4" data-i18n="choose">Choose a story</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <button onclick="openStory(0)" class="story-card bg-white rounded-3xl shadow-md p-5 text-left">
+      <div class="text-5xl mb-2">🕌</div>
+      <div class="font-extrabold text-lg" data-i18n="s1_title">The Honest Trader</div>
+      <div class="text-sm text-ink/60 mt-1" data-i18n="s1_sub">Prophet Muhammad ﷺ</div>
+      <div class="text-xs text-sage-600 mt-2">⏱ 3 min</div>
+    </button>
+    <button onclick="openStory(1)" class="story-card bg-white rounded-3xl shadow-md p-5 text-left">
+      <div class="text-5xl mb-2">🌾</div>
+      <div class="font-extrabold text-lg" data-i18n="s2_title">The Kind Neighbor</div>
+      <div class="text-sm text-ink/60 mt-1" data-i18n="s2_sub">Prophet Yusuf (AS)</div>
+      <div class="text-xs text-sage-600 mt-2">⏱ 4 min</div>
+    </button>
+    <button onclick="openStory(2)" class="story-card bg-white rounded-3xl shadow-md p-5 text-left">
+      <div class="text-5xl mb-2">⛈️</div>
+      <div class="font-extrabold text-lg" data-i18n="s3_title">The Patient Scholar</div>
+      <div class="text-sm text-ink/60 mt-1" data-i18n="s3_sub">Prophet Ayyub (AS)</div>
+      <div class="text-xs text-sage-600 mt-2">⏱ 3 min</div>
+    </button>
+  </div>
+</section>
+
+<!-- Story reader (hidden initially) -->
+<section id="reader" class="hidden max-w-3xl mx-auto p-4">
+  <button onclick="closeStory()" class="text-sky-600 font-bold mb-3">← <span data-i18n="back">Back to stories</span></button>
+  <div class="bg-white rounded-3xl shadow-lg p-6">
+    <div id="story-illustration" class="text-7xl text-center mb-4">🕌</div>
+    <h2 id="story-title" class="text-2xl font-extrabold text-center mb-2"></h2>
+    <p id="story-body" class="text-lg leading-relaxed text-center mb-6"></p>
+
+    <!-- Question -->
+    <div id="question-box" class="hidden bg-sun-300/30 rounded-2xl p-5 text-center">
+      <p id="question-text" class="font-extrabold text-lg mb-4"></p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button onclick="answer(true)" class="bg-sage-600 text-white font-bold px-6 py-3 rounded-2xl" data-i18n="yes">Yes, I would!</button>
+        <button onclick="answer(false)" class="bg-coral-300 text-ink font-bold px-6 py-3 rounded-2xl" data-i18n="think">Let me think…</button>
+      </div>
+    </div>
+
+    <!-- Moral -->
+    <div id="moral-box" class="hidden bg-sage-300/50 rounded-2xl p-5 text-center">
+      <div class="text-4xl mb-2">🌟</div>
+      <p id="moral-text" class="font-extrabold text-lg" data-i18n="moral"></p>
+      <button onclick="closeStory()" class="mt-4 bg-sky-600 text-white font-bold px-6 py-3 rounded-2xl" data-i18n="more">More stories</button>
+    </div>
+
+    <!-- Player controls -->
+    <div id="player" class="mt-4 flex items-center justify-center gap-3">
+      <button id="play" class="bg-sun-500 text-ink font-bold w-12 h-12 rounded-full text-xl">▶</button>
+      <button id="pause" class="hidden bg-sky-300 text-ink font-bold w-12 h-12 rounded-full text-xl">⏸</button>
+      <span id="progress" class="text-sm text-ink/60 ml-2"></span>
+    </div>
+  </div>
+</section>
+
+<script>
+const STORIES = [
+  {
+    en: { title:'The Honest Trader', illustration:'🕌', body:'Once upon a time in Makkah, a man gave the Prophet Muhammad ﷺ a beautiful treasure to keep safe. Many years later, when the man returned, the Prophet gave it back without a single coin missing. The Prophet said: "I am the most honest person. A Muslim must always tell the truth and keep promises."', question:'What would you do if someone gave you their favorite toy to keep?', moral:'Honesty makes our hearts bright like Noor.' },
+    fr: { title:'Le Marchand Honnête', illustration:'🕌', body:'Il y a longtemps à Makkah, un homme confia au Prophète Muhammad ﷺ un beau trésor à garder. Des années plus tard, quand l\'homme revint, le Prophète le rendit sans une seule pièce manquante. Le Prophète dit : "Je suis la personne la plus honnête. Un musulman doit toujours dire la vérité et tenir ses promesses."', question:'Que ferais-tu si quelqu\'un te confiait son jouet préféré ?', moral:'L\'honnêteté rend nos cœurs brillants comme le Noor.' },
+    ar: { title:'التاجر الصادق', illustration:'🕌', body:'في يوم من الأيام في مكة، أعطى رجل النبي محمد ﷺ كنزاً جميلاً يحفظه. وبعد سنوات، عندما عاد الرجل، أعاده النبي دون أن ينقص منه درهم. قال النبي: "أنا أصدق الناس. على المسلم أن يصدق دائماً ووفياً بوعده."', question:'ماذا ستفعلين لو أعطاك أحد لعبته المفضلة لتحفظيها؟', moral:'الصدق يجعل قلوبنا مضيئة مثل النور.' },
+    id: { title:'Pedagang yang Jujur', illustration:'🕌', body:'Pada zaman dahulu di Makkah, seorang menitipkan harta berharga kepada Nabi Muhammad ﷺ. Bertahun-tahun kemudian, ketika orang itu kembali, Nabi mengembalikannya tanpa satu koin pun kurang. Nabi bersabda: "Aku orang yang paling jujur. Seorang Muslim harus selalu berkata benar dan menepati janji."', question:'Apa yang akan kamu lakukan jika seseorang menitipkan mainan favoritnya?', moral:'Kejujuran membuat hati kita bersinar seperti Noor.' }
+  },
+  {
+    en: { title:'The Kind Neighbor', illustration:'🌾', body:'Young Yusuf\'s brothers were jealous. Instead of hurting him, his father Yaqub taught him patience. Years later, Yusuf became a wise leader in Egypt. When his brothers came hungry, he forgave them and shared his food.', question:'How can you be kind to a brother or sister today?', moral:'Patience and kindness turn enemies into family.' },
+    fr: { title:'Le Voisin Gentil', illustration:'🌾', body:'Les frères de Yusuf étaient jaloux. Son père Ya\'qub lui apprit la patience. Des années plus tard, Yusuf devint un sage dirigeant en Égypte. Quand ses frères vinrent affamés, il leur pardonna et partagea sa nourriture.', question:'Comment peux-tu être gentil avec un frère ou une sœur aujourd\'hui ?', moral:'La patience et la gentillesse transforment les ennemis en famille.' },
+    ar: { title:'الجار الطيب', illustration:'🌾', body:'كان إخوة يوسف حسودين. بدلاً من إيذائه، علّمه أبوه يعقوب الصبر. وبعد سنوات، أصبح يوسف حاكماً حكيماً في مصر. وعندما جاء إخوته جياعاً، سامحهم وشاركهم طعامه.', question:'كيف تكونين لطيفة مع أخ أو أخت اليوم؟', moral:'الصبر واللطف يحوّلان الأعداء إلى عائلة.' },
+    id: { title:'Tetangga yang Baik', illustration:'🌾', body:'Saudara-saudara Yusuf iri padanya. Daripada menyakitinya, ayah mereka Yaqub mengajarinya kesabaran. Bertahun-tahun kemudian, Yusuf menjadi pemimpin bijak di Mesir. Ketika saudara-saudaranya datang dalam keadaan lapar, dia memaafkan mereka dan berbagi makanan.', question:'Bagaimana kamu bisa bersikap baik kepada saudara hari ini?', moral:'Kesabaran dan kebaikan mengubah musuh menjadi keluarga.' }
+  },
+  {
+    en: { title:'The Patient Scholar', illustration:'⛈️', body:'Prophet Ayyub lost his health, family, and wealth — but he never stopped saying "Alhamdulillah." After many years of patience, Allah restored everything to him, doubled.', question:'When something is hard, what dua can we say?', moral:'Patience is powerful. Allah hears every patient heart.' },
+    fr: { title:'Le Sage Patient', illustration:'⛈️', body:'Le Prophète Ayyub perdit sa santé, sa famille et sa richesse — mais ne cessa jamais de dire "Alhamdulillah". Après de nombreuses années de patience, Allah lui restitua tout, au double.', question:'Quand c\'est difficile, quelle dua pouvons-nous dire ?', moral:'La patience est puissante. Allah entend chaque cœur patient.' },
+    ar: { title:'العالم الصبور', illustration:'⛈️', body:'فقد النبي أيوب صحته وعائلته وماله — لكنه لم يتوقف عن قول "الحمد لله". وبعد سنوات من الصبر، رد الله إليه كل شيء مضاعفاً.', question:'عندما يكون الشيء صعباً، أي دعاء نقول؟', moral:'الصبر قوي. الله يسمع كل قلب صبور.' },
+    id: { title:'Cendekiawan yang Sabar', illustration:'⛈️', body:'Nabi Ayyub kehilangan kesehatan, keluarga, dan hartanya — tapi tidak pernah berhenti mengucapkan "Alhamdulillah." Setelah bertahun-tahun kesabaran, Allah mengembalikan segalanya kepadanya, dilipatgandakan.', question:'Ketika sesuatu sulit, doa apa yang bisa kita baca?', moral:'Kesabaran itu kuat. Allah mendengar setiap hati yang sabar.' }
+  }
+];
+
+let state = { idx:0, wordIdx:0, timer:null, playing:false, lang:'en' };
+
+function openStory(i) {
+  state.idx = i;
+  state.wordIdx = 0;
+  document.getElementById('selector').classList.add('hidden');
+  document.getElementById('reader').classList.remove('hidden');
+  document.getElementById('question-box').classList.add('hidden');
+  document.getElementById('moral-box').classList.add('hidden');
+  document.getElementById('player').classList.remove('hidden');
+  const s = STORIES[i][state.lang] || STORIES[i].en;
+  document.getElementById('story-illustration').textContent = s.illustration;
+  document.getElementById('story-title').textContent = s.title;
+  renderBody(s.body);
+  document.getElementById('question-text').textContent = s.question;
+  document.getElementById('moral-text').textContent = '🌟 ' + s.moral;
+  startPlay();
+}
+
+function closeStory() {
+  stopPlay();
+  document.getElementById('selector').classList.remove('hidden');
+  document.getElementById('reader').classList.add('hidden');
+}
+
+function renderBody(text) {
+  const words = text.split(' ');
+  const body = document.getElementById('story-body');
+  body.innerHTML = words.map((w,i) => `<span class="word" data-i="${i}">${w}</span>`).join(' ');
+  state.wordIdx = 0;
+}
+
+function highlightNext() {
+  const words = document.querySelectorAll('.word');
+  if (state.wordIdx >= words.length) { stopPlay(); showQuestion(); return; }
+  words.forEach(w => w.classList.remove('active'));
+  if (state.wordIdx > 0) words[state.wordIdx-1].classList.remove('active');
+  words[state.wordIdx].classList.add('active');
+  document.getElementById('progress').textContent = `${state.wordIdx+1}/${words.length}`;
+  state.wordIdx++;
+}
+
+function startPlay() {
+  state.playing = true;
+  document.getElementById('play').classList.add('hidden');
+  document.getElementById('pause').classList.remove('hidden');
+  state.timer = setInterval(highlightNext, 350);
+}
+
+function stopPlay() {
+  state.playing = false;
+  clearInterval(state.timer);
+  document.getElementById('play').classList.remove('hidden');
+  document.getElementById('pause').classList.add('hidden');
+}
+
+function showQuestion() {
+  document.getElementById('player').classList.add('hidden');
+  document.getElementById('question-box').classList.remove('hidden');
+}
+
+function answer(yes) {
+  document.getElementById('question-box').classList.add('hidden');
+  document.getElementById('moral-box').classList.remove('hidden');
+}
+
+document.getElementById('play').onclick = startPlay;
+document.getElementById('pause').onclick = stopPlay;
+
+const I18N = {
+  en:{ title:'Story Grove', sub:'Animated tales of the Prophets', choose:'Choose a story', s1_title:'The Honest Trader', s1_sub:'Prophet Muhammad ﷺ', s2_title:'The Kind Neighbor', s2_sub:'Prophet Yusuf (AS)', s3_title:'The Patient Scholar', s3_sub:'Prophet Ayyub (AS)', back:'Back to stories', yes:'Yes, I would!', think:'Let me think…', moral:'', more:'More stories' },
+  fr:{ title:'Bosquet des Histoires', sub:'Contes animés des Prophètes', choose:'Choisis une histoire', s1_title:'Le Marchand Honnête', s1_sub:'Prophète Muhammad ﷺ', s2_title:'Le Voisin Gentil', s2_sub:'Prophète Yusuf (AS)', s3_title:'Le Sage Patient', s3_sub:'Prophète Ayyub (AS)', back:'Retour aux histoires', yes:'Oui, je le ferais !', think:'Je réfléchis…', moral:'', more:'Plus d\'histoires' },
+  ar:{ title:'بستان القصص', sub:'حكايات الأنبياء المصورة', choose:'اختاري قصة', s1_title:'التاجر الصادق', s1_sub:'النبي محمد ﷺ', s2_title:'الجار الطيب', s2_sub:'النبي يوسف (ع)', s3_title:'العالم الصبور', s3_sub:'النبي أيوب (ع)', back:'العودة إلى القصص', yes:'نعم، سأفعل!', think:'دني أفكر…', moral:'', more:'المزيد من القصص' },
+  id:{ title:'Hutan Cerita', sub:'Kisah para Nabi bergambar', choose:'Pilih cerita', s1_title:'Pedagang Jujur', s1_sub:'Nabi Muhammad ﷺ', s2_title:'Tetangga Baik', s2_sub:'Nabi Yusuf (AS)', s3_title:'Cendekiawan Sabar', s3_sub:'Nabi Ayyub (AS)', back:'Kembali ke cerita', yes:'Ya, saya akan!', think:'Saya pikir…', moral:'', more:'Cerita lain' }
+};
+const ls = document.getElementById('lang');
+function applyLang(l) {
+  state.lang = l;
+  const d = I18N[l]||I18N.en;
+  document.documentElement.lang = l; document.documentElement.dir = (l==='ar')?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(e => { const k=e.getAttribute('data-i18n'); if(d[k]) e.textContent=d[k]; });
+}
+ls.addEventListener('change', e => applyLang(e.target.value));
+applyLang('en');
+</script>
+</body>
+</html>

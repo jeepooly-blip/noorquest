@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NoorQuest — World Map</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: { sky:{50:'#EAF6FF',300:'#7CC4F2',600:'#1E88E5'}, sun:{300:'#FFD966',500:'#FFC107'}, sage:{300:'#A8D5BA',600:'#43A047'}, coral:{300:'#FFAB91',600:'#E64A19'}, cream:'#FFF8E7', ink:'#1A2A3A'}
+  }}}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Nunito', system-ui, sans-serif; }
+  @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  .lumi-bob { animation: bob 2.4s ease-in-out infinite; }
+  .zone-card { transition: transform .2s, box-shadow .2s; }
+  .zone-card:hover { transform: translateY(-4px) scale(1.02); }
+  .locked { filter: grayscale(0.8); opacity: 0.6; }
+</style>
+</head>
+<body class="bg-gradient-to-b from-sky-50 to-cream min-h-screen text-ink">
+
+<!-- Top bar: avatar, progress, lang -->
+<header class="bg-white shadow-sm px-4 py-3 flex items-center gap-3 sticky top-0 z-10">
+  <a href="landing.html" class="text-2xl">←</a>
+  <div class="w-12 h-12 rounded-full bg-sun-300 flex items-center justify-center text-2xl font-extrabold">A</div>
+  <div class="flex-1">
+    <div class="text-xs text-ink/60">Aisha's Noor Tree</div>
+    <div class="h-3 bg-sky-50 rounded-full overflow-hidden">
+      <div class="h-full bg-gradient-to-r from-sage-300 to-sage-600" style="width: 42%"></div>
+    </div>
+  </div>
+  <div class="text-right">
+    <div class="text-xs text-ink/60">Level 3</div>
+    <div class="text-sm font-bold text-sun-500">⭐ 240 XP</div>
+  </div>
+  <select id="lang" class="rounded-full px-2 py-1 bg-sky-50 text-sm font-semibold">
+    <option value="en">🇬🇧</option><option value="fr">🇫🇷</option><option value="ar">🇸🇦</option><option value="id">🇮🇩</option>
+  </select>
+</header>
+
+<!-- Lumi speech -->
+<div class="px-4 py-4 flex items-center gap-3 max-w-3xl mx-auto">
+  <div class="lumi-bob w-16 h-16 flex-shrink-0">
+    <svg viewBox="0 0 64 64" class="w-full h-full">
+      <ellipse cx="32" cy="38" rx="22" ry="24" fill="#FFF8E7" stroke="#1A2A3A" stroke-width="2"/>
+      <ellipse cx="24" cy="34" r="3" fill="#1A2A3A"/><ellipse cx="40" cy="34" r="3" fill="#1A2A3A"/>
+      <circle cx="25" cy="33" r="1" fill="#fff"/><circle cx="41" cy="33" r="1" fill="#fff"/>
+      <path d="M26 44 Q32 48 38 44" stroke="#1A2A3A" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="32" cy="20" rx="6" ry="3" fill="#FFC107"/>
+    </svg>
+  </div>
+  <div class="bg-white rounded-2xl rounded-tl-none shadow-md px-4 py-3 flex-1">
+    <p class="font-semibold" data-i18n="lumi_line">Assalamu alaikum, Aisha! Where shall we explore today?</p>
+  </div>
+</div>
+
+<!-- World Map -->
+<main class="px-4 pb-8 max-w-4xl mx-auto">
+  <h1 class="text-3xl font-extrabold text-center mb-2" data-i18n="map_title">NoorQuest Garden</h1>
+  <p class="text-center text-ink/60 mb-6" data-i18n="map_sub">Tap a zone to play!</p>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    <!-- Market (unlocked) -->
+    <a href="halal-scanner.html" class="zone-card bg-gradient-to-br from-sage-300 to-sage-600 rounded-3xl p-5 shadow-md text-white aspect-square flex flex-col justify-between">
+      <div class="text-5xl">🛒</div>
+      <div>
+        <div class="font-extrabold text-xl" data-i18n="zone_market">Market</div>
+        <div class="text-sm opacity-90" data-i18n="zone_market_sub">Halal Scanner</div>
+      </div>
+    </a>
+
+    <!-- Salah Oasis (unlocked) -->
+    <a href="salah-mat.html" class="zone-card bg-gradient-to-br from-sky-300 to-sky-600 rounded-3xl p-5 shadow-md text-white aspect-square flex flex-col justify-between">
+      <div class="text-5xl">🕌</div>
+      <div>
+        <div class="font-extrabold text-xl" data-i18n="zone_oasis">Oasis</div>
+        <div class="text-sm opacity-90" data-i18n="zone_oasis_sub">Salah & Wudu</div>
+      </div>
+    </a>
+
+    <!-- Story Grove (unlocked) -->
+    <a href="story-grove.html" class="zone-card bg-gradient-to-br from-sun-300 to-sun-500 rounded-3xl p-5 shadow-md text-white aspect-square flex flex-col justify-between">
+      <div class="text-5xl">📖</div>
+      <div>
+        <div class="font-extrabold text-xl" data-i18n="zone_grove">Story Grove</div>
+        <div class="text-sm opacity-90" data-i18n="zone_grove_sub">Prophet tales</div>
+      </div>
+    </a>
+
+    <!-- Noor Tree (unlocked) -->
+    <a href="noor-tree.html" class="zone-card bg-gradient-to-br from-coral-300 to-coral-600 rounded-3xl p-5 shadow-md text-white aspect-square flex flex-col justify-between">
+      <div class="text-5xl">🌳</div>
+      <div>
+        <div class="font-extrabold text-xl" data-i18n="zone_tree">Noor Tree</div>
+        <div class="text-sm opacity-90" data-i18n="zone_tree_sub">Your rewards</div>
+      </div>
+    </a>
+
+    <!-- Community (locked) -->
+    <div class="zone-card locked bg-gray-300 rounded-3xl p-5 shadow-md text-white aspect-square flex flex-col justify-between cursor-not-allowed">
+      <div class="text-5xl">🎨</div>
+      <div>
+        <div class="font-extrabold text-xl" data-i18n="zone_gallery">Gallery</div>
+        <div class="text-sm opacity-90" data-i18n="zone_locked">🔒 Complete 3 zones</div>
+      </div>
+    </div>
+
+    <!-- Daily Quest (locked) -->
+    <div class="zone-card locked bg-gray-300 rounded-3xl p-5 shadow-md text-white aspect-square flex flex-col justify-between cursor-not-allowed">
+      <div class="text-5xl">⭐</div>
+      <div>
+        <div class="font-extrabold text-xl" data-i18n="zone_daily">Daily Quest</div>
+        <div class="text-sm opacity-90" data-i18n="zone_locked2">🔒 Coming soon</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  const I18N = {
+    en: { lumi_line:"Assalamu alaikum, Aisha! Where shall we explore today?", map_title:"NoorQuest Garden", map_sub:"Tap a zone to play!", zone_market:"Market", zone_market_sub:"Halal Scanner", zone_oasis:"Oasis", zone_oasis_sub:"Salah & Wudu", zone_grove:"Story Grove", zone_grove_sub:"Prophet tales", zone_tree:"Noor Tree", zone_tree_sub:"Your rewards", zone_gallery:"Gallery", zone_locked:"🔒 Complete 3 zones", zone_daily:"Daily Quest", zone_locked2:"🔒 Coming soon" },
+    fr: { lumi_line:"Assalamu alaikum, Aisha ! Où explorerons-nous aujourd'hui ?", map_title:"Jardin NoorQuest", map_sub:"Touche une zone pour jouer !", zone_market:"Marché", zone_market_sub:"Scanner Halal", zone_oasis:"Oasis", zone_oasis_sub:"Salah & Wudu", zone_grove:"Bosquet", zone_grove_sub:"Récits des prophètes", zone_tree:"Arbre Noor", zone_tree_sub:"Tes récompenses", zone_gallery:"Galerie", zone_locked:"🔒 Finis 3 zones", zone_daily:"Quête du jour", zone_locked2:"🔒 Bientôt" },
+    ar: { lumi_line:"السلام عليكم، عائشة! أين سنستكشف اليوم؟", map_title:"حديقة نور كويست", map_sub:"انقري على منطقة للعب!", zone_market:"السوق", zone_market_sub:"ماسح الحلال", zone_oasis:"الواحة", zone_oasis_sub:"الصلاة والوضوء", zone_grove:"بستان القصص", zone_grove_sub:"قصص الأنبياء", zone_tree:"شجرة النور", zone_tree_sub:"جوائزك", zone_gallery:"المعرض", zone_locked:"🔒 أكملي 3 مناطق", zone_daily:"مهمة اليوم", zone_locked2:"🔒 قريباً" },
+    id: { lumi_line:"Assalamu alaikum, Aisha! Mau ke mana hari ini?", map_title:"Taman NoorQuest", map_sub:"Ketuk zona untuk bermain!", zone_market:"Pasar", zone_market_sub:"Pemindai Halal", zone_oasis:"Oasis", zone_oasis_sub:"Shalat & Wudu", zone_grove:"Hutan Cerita", zone_grove_sub:"Kisah nabi", zone_tree:"Pohon Noor", zone_tree_sub:"Hadiahmu", zone_gallery:"Galeri", zone_locked:"🔒 Selesaikan 3 zona", zone_daily:"Misi Harian", zone_locked2:"🔒 Segera" }
+  };
+  const ls = document.getElementById('lang');
+  function apply(l) {
+    const d = I18N[l]||I18N.en;
+    document.documentElement.lang = l; document.documentElement.dir = (l==='ar')?'rtl':'ltr';
+    document.querySelectorAll('[data-i18n]').forEach(e => { const k=e.getAttribute('data-i18n'); if(d[k]) e.textContent=d[k]; });
+  }
+  ls.addEventListener('change', e => apply(e.target.value));
+  apply('en');
+</script>
+</body>
+</html>

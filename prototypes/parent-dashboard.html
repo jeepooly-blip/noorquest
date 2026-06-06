@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NoorQuest — Parent Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: { teal:{50:'#E0F2F1',100:'#B2DFDB',600:'#00897B'}, sky:{50:'#EAF6FF',300:'#7CC4F2',600:'#1E88E5'}, sun:{300:'#FFD966',500:'#FFC107'}, sage:{300:'#A8D5BA',600:'#43A047'}, cream:'#FFF8E7', ink:'#1A2A3A', neutral:{50:'#FAFAFA',200:'#EEEEEE',700:'#616161',900:'#212121'} },
+    fontFamily: { sans:['Inter','system-ui','sans-serif'] }
+  }}}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Inter', system-ui, sans-serif; }
+  .stat-card { transition: transform .2s, box-shadow .2s; }
+  .stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+</style>
+</head>
+<body class="bg-neutral-50 min-h-screen text-neutral-900">
+
+<div class="flex">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-neutral-200 min-h-screen p-4 hidden md:block">
+    <div class="flex items-center gap-2 mb-8">
+      <div class="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white font-extrabold">N</div>
+      <span class="font-extrabold text-xl">NoorQuest</span>
+    </div>
+    <nav class="space-y-1 text-sm">
+      <a href="#" class="block px-3 py-2 rounded-lg bg-teal-50 text-teal-600 font-semibold">📊 Dashboard</a>
+      <a href="#" class="block px-3 py-2 rounded-lg hover:bg-neutral-50">📚 Resources</a>
+      <a href="#" class="block px-3 py-2 rounded-lg hover:bg-neutral-50">🖼️ Gallery Approvals</a>
+      <a href="#" class="block px-3 py-2 rounded-lg hover:bg-neutral-50">⚙️ Settings</a>
+      <a href="landing.html" class="block px-3 py-2 rounded-lg hover:bg-neutral-50 mt-8">← Back to home</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 p-4 md:p-8 max-w-6xl">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-3xl font-extrabold">Assalamu alaikum, Ahmed 👋</h1>
+        <p class="text-neutral-700 text-sm mt-1">Here's how your children are doing this week.</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <select id="lang" class="rounded-lg px-3 py-2 bg-white border border-neutral-200 text-sm">
+          <option value="en">🇬🇧 English</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="ar">🇸🇦 العربية</option>
+          <option value="id">🇮🇩 Indonesia</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Stats overview -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+      <div class="stat-card bg-white rounded-2xl p-4 border border-neutral-200">
+        <div class="text-3xl mb-1">⏱️</div>
+        <div class="text-2xl font-extrabold">2h 15m</div>
+        <div class="text-xs text-neutral-700" data-i18n="this_week">This week</div>
+      </div>
+      <div class="stat-card bg-white rounded-2xl p-4 border border-neutral-200">
+        <div class="text-3xl mb-1">⭐</div>
+        <div class="text-2xl font-extrabold">12</div>
+        <div class="text-xs text-neutral-700" data-i18n="badges_earned">Badges earned</div>
+      </div>
+      <div class="stat-card bg-white rounded-2xl p-4 border border-neutral-200">
+        <div class="text-3xl mb-1">🔥</div>
+        <div class="text-2xl font-extrabold">5 days</div>
+        <div class="text-xs text-neutral-700" data-i18n="streak">Streak</div>
+      </div>
+      <div class="stat-card bg-white rounded-2xl p-4 border border-neutral-200">
+        <div class="text-3xl mb-1">📖</div>
+        <div class="text-2xl font-extrabold">3</div>
+        <div class="text-xs text-neutral-700" data-i18n="stories_done">Stories completed</div>
+      </div>
+    </div>
+
+    <!-- Children cards -->
+    <h2 class="text-xl font-extrabold mb-3" data-i18n="children">Your children</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div class="bg-white rounded-2xl p-5 border border-neutral-200">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-sun-300 to-sun-500 flex items-center justify-center text-2xl">👧</div>
+          <div>
+            <div class="font-extrabold">Aisha</div>
+            <div class="text-xs text-neutral-700">Age 7 • Level 3</div>
+          </div>
+        </div>
+        <div class="space-y-2 text-sm">
+          <div>
+            <div class="flex justify-between mb-1"><span data-i18n="halal_progress">Halal Scanner</span><span>12/20</span></div>
+            <div class="h-2 bg-neutral-200 rounded-full overflow-hidden"><div class="h-full bg-sage-600" style="width: 60%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1"><span data-i18n="salah_progress">Salah Station</span><span>8 steps</span></div>
+            <div class="h-2 bg-neutral-200 rounded-full overflow-hidden"><div class="h-full bg-sky-600" style="width: 40%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1"><span data-i18n="stories_progress">Stories</span><span>3/3</span></div>
+            <div class="h-2 bg-neutral-200 rounded-full overflow-hidden"><div class="h-full bg-sun-500" style="width: 100%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-5 border border-neutral-200">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-sky-300 to-sky-600 flex items-center justify-center text-2xl">👦</div>
+          <div>
+            <div class="font-extrabold">Yusuf</div>
+            <div class="text-xs text-neutral-700">Age 6 • Level 1</div>
+          </div>
+        </div>
+        <div class="space-y-2 text-sm">
+          <div>
+            <div class="flex justify-between mb-1"><span data-i18n="halal_progress">Halal Scanner</span><span>5/20</span></div>
+            <div class="h-2 bg-neutral-200 rounded-full overflow-hidden"><div class="h-full bg-sage-600" style="width: 25%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1"><span data-i18n="salah_progress">Salah Station</span><span>2 steps</span></div>
+            <div class="h-2 bg-neutral-200 rounded-full overflow-hidden"><div class="h-full bg-sky-600" style="width: 10%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1"><span data-i18n="stories_progress">Stories</span><span>1/3</span></div>
+            <div class="h-2 bg-neutral-200 rounded-full overflow-hidden"><div class="h-full bg-sun-500" style="width: 33%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discussion prompts + Resources -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-teal-50 rounded-2xl p-5">
+        <h3 class="font-extrabold text-lg mb-3 text-teal-600" data-i18n="dinner_prompts">💬 Dinner table prompts</h3>
+        <ul class="space-y-2 text-sm">
+          <li class="bg-white rounded-xl p-3" data-i18n="prompt1">"What was your favorite thing you learned with Lumi today?"</li>
+          <li class="bg-white rounded-xl p-3" data-i18n="prompt2">"How can we be kind like the Prophets?"</li>
+          <li class="bg-white rounded-xl p-3" data-i18n="prompt3">"What Halal food should we make this weekend?"</li>
+        </ul>
+      </div>
+      <div class="bg-white rounded-2xl p-5 border border-neutral-200">
+        <h3 class="font-extrabold text-lg mb-3" data-i18n="resources">📚 Resources</h3>
+        <div class="space-y-2 text-sm">
+          <a href="#" class="block p-3 rounded-xl hover:bg-neutral-50 border border-neutral-200">
+            <div class="font-bold" data-i18n="r1">Explaining Halal to your 7-year-old</div>
+            <div class="text-xs text-neutral-700" data-i18n="r1_meta">Article • 5 min read</div>
+          </a>
+          <a href="#" class="block p-3 rounded-xl hover:bg-neutral-50 border border-neutral-200">
+            <div class="font-bold" data-i18n="r2">Printable: Halal shopping checklist</div>
+            <div class="text-xs text-neutral-700" data-i18n="r2_meta">PDF • 1 page</div>
+          </a>
+          <a href="#" class="block p-3 rounded-xl hover:bg-neutral-50 border border-neutral-200">
+            <div class="font-bold" data-i18n="r3">School advocacy toolkit</div>
+            <div class="text-xs text-neutral-700" data-i18n="r3_meta">Guide • 10 min</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const I18N = {
+  en: { this_week:'This week', badges_earned:'Badges earned', streak:'Streak', stories_done:'Stories completed', children:'Your children', halal_progress:'Halal Scanner', salah_progress:'Salah Station', stories_progress:'Stories', dinner_prompts:'💬 Dinner table prompts', prompt1:'"What was your favorite thing you learned with Lumi today?"', prompt2:'"How can we be kind like the Prophets?"', prompt3:'"What Halal food should we make this weekend?"', resources:'📚 Resources', r1:'Explaining Halal to your 7-year-old', r1_meta:'Article • 5 min read', r2:'Printable: Halal shopping checklist', r2_meta:'PDF • 1 page', r3:'School advocacy toolkit', r3_meta:'Guide • 10 min' },
+  fr: { this_week:'Cette semaine', badges_earned:'Badges obtenus', streak:'Série', stories_done:'Histoires terminées', children:'Vos enfants', halal_progress:'Scanner Halal', salah_progress:'Station Salah', stories_progress:'Histoires', dinner_prompts:'💬 Sujets pour le dîner', prompt1:'"Qu\'as-tu préféré apprendre avec Lumi aujourd\'hui ?"', prompt2:'"Comment être gentil comme les Prophètes ?"', prompt3:'"Quel plat Halal préparer ce week-end ?"', resources:'📚 Ressources', r1:'Expliquer le Halal à un enfant de 7 ans', r1_meta:'Article • 5 min', r2:'Imprimable : liste de courses Halal', r2_meta:'PDF • 1 page', r3:'Boîte à outils pour l\'école', r3_meta:'Guide • 10 min' },
+  ar: { this_week:'هذا الأسبوع', badges_earned:'الشارات المكتسبة', streak:'سلسلة', stories_done:'القصص المكتملة', children:'أطفالك', halal_progress:'ماسح الحلال', salah_progress:'محطة الصلاة', stories_progress:'القصص', dinner_prompts:'💬 مواضيع للعشاء', prompt1:'"ما أكثر شيء تعلمته مع لومي اليوم؟"', prompt2:'"كيف نكون لطفاء مثل الأنبياء؟"', prompt3:'"ما الطعام الحلال الذي سنعده في نهاية الأسبوع؟"', resources:'📚 المصادر', r1:'شرح الحلال لطفل عمره 7 سنوات', r1_meta:'مقال • 5 دقائق', r2:'قائمة تسوق حلال للطباعة', r2_meta:'PDF • صفحة', r3:'أدوات المناصرة في المدرسة', r3_meta:'دليل • 10 دقائق' },
+  id: { this_week:'Minggu ini', badges_earned:'Lencana diperoleh', streak:'Streak', stories_done:'Cerita selesai', children:'Anak-anak Anda', halal_progress:'Pemindai Halal', salah_progress:'Stasiun Shalat', stories_progress:'Cerita', dinner_prompts:'💬 Topik makan malam', prompt1:'"Apa hal favorit yang kamu pelajari dengan Lumi hari ini?"', prompt2:'"Bagaimana kita bisa baik seperti para Nabi?"', prompt3:'"Makanan Halal apa yang akan kita masak akhir pekan ini?"', resources:'📚 Sumber daya', r1:'Menjelaskan Halal untuk anak 7 tahun', r1_meta:'Artikel • 5 menit', r2:'Cetak: daftar belanja Halal', r2_meta:'PDF • 1 halaman', r3:'Toolkit advokasi sekolah', r3_meta:'Panduan • 10 menit' }
+};
+const ls = document.getElementById('lang');
+function apply(l) {
+  const d = I18N[l]||I18N.en;
+  document.documentElement.lang = l; document.documentElement.dir = (l==='ar')?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(e => { const k=e.getAttribute('data-i18n'); if(d[k]) e.textContent=d[k]; });
+}
+ls.addEventListener('change', e => apply(e.target.value));
+apply('en');
+</script>
+</body>
+</html>

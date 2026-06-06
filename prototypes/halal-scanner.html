@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NoorQuest — Halal Scanner</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: { sky:{50:'#EAF6FF',300:'#7CC4F2',600:'#1E88E5'}, sun:{300:'#FFD966',500:'#FFC107'}, sage:{300:'#A8D5BA',600:'#43A047'}, coral:{300:'#FFAB91',600:'#E64A19'}, cream:'#FFF8E7', ink:'#1A2A3A'}
+  }}}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Nunito', system-ui, sans-serif; }
+  @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  .lumi-bob { animation: bob 2.4s ease-in-out infinite; }
+  .draggable { cursor: grab; touch-action: none; user-select: none; transition: transform .15s; }
+  .draggable:active { cursor: grabbing; transform: scale(1.1); }
+  .draggable.dragging { opacity: 0.4; }
+  .scanner-zone { transition: all .3s; }
+  .scanner-zone.over { background: #FFD96644; transform: scale(1.05); }
+  .scanner-zone.flash-green { background: #43A047 !important; }
+  .scanner-zone.flash-red { background: #E64A19 !important; }
+  .scanner-zone.flash-yellow { background: #FFC107 !important; }
+  @keyframes scan-beam {
+    0% { top: 0; } 50% { top: calc(100% - 6px); } 100% { top: 0; }
+  }
+  .scan-beam { animation: scan-beam 1.5s ease-in-out infinite; }
+  @keyframes confetti-fall {
+    0% { transform: translateY(-100px) rotate(0); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+  .confetti { position: fixed; width: 10px; height: 14px; pointer-events: none; animation: confetti-fall 2s linear forwards; }
+</style>
+</head>
+<body class="bg-gradient-to-b from-sky-50 to-cream min-h-screen text-ink">
+
+<!-- Top bar -->
+<header class="bg-white shadow-sm px-4 py-3 flex items-center gap-3 sticky top-0 z-20">
+  <a href="kids-map.html" class="text-2xl">←</a>
+  <div class="text-2xl">🛒</div>
+  <div class="flex-1">
+    <div class="font-extrabold" data-i18n="title">Halal Scanner</div>
+    <div class="text-xs text-ink/60" data-i18n="sub">Drag foods onto the scanner</div>
+  </div>
+  <div class="bg-sun-300 rounded-full px-3 py-1 font-extrabold">⭐ <span id="score">0</span></div>
+  <div class="bg-sage-300 rounded-full px-3 py-1 font-extrabold">🔥 <span id="streak">0</span></div>
+  <select id="lang" class="rounded-full px-2 py-1 bg-sky-50 text-sm font-semibold">
+    <option value="en">🇬🇧</option><option value="fr">🇫🇷</option><option value="ar">🇸🇦</option><option value="id">🇮🇩</option>
+  </select>
+</header>
+
+<!-- Main game area: 3-column layout -->
+<main class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 max-w-6xl mx-auto">
+
+  <!-- Left: Shelf -->
+  <section class="bg-white rounded-3xl shadow-md p-4">
+    <h2 class="font-extrabold text-lg mb-3" data-i18n="shelf">Grocery Shelf</h2>
+    <div id="shelf" class="grid grid-cols-3 gap-3"></div>
+  </section>
+
+  <!-- Center: Scanner + Lumi -->
+  <section class="bg-white rounded-3xl shadow-md p-4 flex flex-col items-center">
+    <div class="lumi-bob w-20 h-20 mb-2">
+      <svg viewBox="0 0 64 64" class="w-full h-full">
+        <ellipse cx="32" cy="38" rx="22" ry="24" fill="#FFF8E7" stroke="#1A2A3A" stroke-width="2"/>
+        <ellipse cx="24" cy="34" r="3" fill="#1A2A3A"/><ellipse cx="40" cy="34" r="3" fill="#1A2A3A"/>
+        <circle cx="25" cy="33" r="1" fill="#fff"/><circle cx="41" cy="33" r="1" fill="#fff"/>
+        <path id="lumi-mouth" d="M26 44 Q32 48 38 44" stroke="#1A2A3A" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="32" cy="20" rx="6" ry="3" fill="#FFC107"/>
+      </svg>
+    </div>
+    <div class="bg-sky-50 rounded-2xl px-3 py-2 mb-4 text-center min-h-12 flex items-center justify-center">
+      <p id="lumi-line" class="text-sm font-semibold" data-i18n="lumi_intro">Pick a food and drag it here!</p>
+    </div>
+    <div id="scanner" class="scanner-zone relative w-full h-48 rounded-2xl border-4 border-dashed border-sky-300 bg-sky-50 flex items-center justify-center text-ink/40 text-6xl">
+      <span>📦</span>
+      <div id="beam" class="hidden absolute left-2 right-2 h-1.5 bg-sun-500 rounded scan-beam shadow-[0_0_20px_#FFC107]"></div>
+    </div>
+  </section>
+
+  <!-- Right: Score / achievements -->
+  <section class="bg-white rounded-3xl shadow-md p-4">
+    <h2 class="font-extrabold text-lg mb-3" data-i18n="progress">Progress</h2>
+    <div class="space-y-3">
+      <div>
+        <div class="flex justify-between text-sm font-semibold mb-1"><span data-i18n="halal_found">Halal found</span><span><span id="halal-count">0</span>/20</span></div>
+        <div class="h-2 bg-sky-50 rounded-full overflow-hidden"><div id="halal-bar" class="h-full bg-sage-600" style="width: 0%"></div></div>
+      </div>
+      <div>
+        <div class="flex justify-between text-sm font-semibold mb-1"><span data-i18n="haram_avoided">Haram avoided</span><span><span id="haram-count">0</span>/10</span></div>
+        <div class="h-2 bg-sky-50 rounded-full overflow-hidden"><div id="haram-bar" class="h-full bg-coral-600" style="width: 0%"></div></div>
+      </div>
+      <div>
+        <div class="flex justify-between text-sm font-semibold mb-1"><span data-i18n="mushbooh_asked">Asked Mom/Dad</span><span><span id="mush-count">0</span>/5</span></div>
+        <div class="h-2 bg-sky-50 rounded-full overflow-hidden"><div id="mush-bar" class="h-full bg-sun-500" style="width: 0%"></div></div>
+      </div>
+    </div>
+    <div class="mt-4 bg-sun-300/30 rounded-2xl p-3">
+      <div class="font-extrabold text-sm mb-1" data-i18n="badges">Badges</div>
+      <div class="flex flex-wrap gap-2" id="badges"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+// Item data
+const ITEMS = [
+  { id:'apple',   emoji:'🍎', name:'Apple',   cat:'halal' },
+  { id:'banana',  emoji:'🍌', name:'Banana',  cat:'halal' },
+  { id:'dates',   emoji:'🌴', name:'Dates',   cat:'halal' },
+  { id:'grapes',  emoji:'🍇', name:'Grapes',  cat:'halal' },
+  { id:'honey',   emoji:'🍯', name:'Honey',   cat:'halal' },
+  { id:'milk',    emoji:'🥛', name:'Milk',    cat:'halal' },
+  { id:'bread',   emoji:'🍞', name:'Bread',   cat:'halal' },
+  { id:'rice',    emoji:'🍚', name:'Rice',    cat:'halal' },
+  { id:'chicken', emoji:'🍗', name:'Chicken', cat:'halal' },
+  { id:'fish',    emoji:'🐟', name:'Fish',    cat:'halal' },
+  { id:'olives',  emoji:'🫒', name:'Olives',  cat:'halal' },
+  { id:'cheese',  emoji:'🧀', name:'Cheese',  cat:'halal' },
+  { id:'yogurt',  emoji:'🥣', name:'Yogurt',  cat:'halal' },
+  { id:'carrot',  emoji:'🥕', name:'Carrot',  cat:'halal' },
+  { id:'pork',    emoji:'🥩', name:'Pork',    cat:'haram' },
+  { id:'bacon',   emoji:'🥓', name:'Bacon',   cat:'haram' },
+  { id:'ham',     emoji:'🍖', name:'Ham',     cat:'haram' },
+  { id:'wine',    emoji:'🍷', name:'Wine',    cat:'haram' },
+  { id:'gummy',   emoji:'🍬', name:'Gummy',   cat:'mushbooh' },
+  { id:'cheese-q',emoji:'🧀', name:'Cheese?', cat:'mushbooh' }
+];
+const LINES = {
+  halal: {
+    en:['Yay! {n} is Halal and super yummy! ⭐','MashaAllah! {n} is Halal.','Allah gave us {n} to enjoy!'],
+    fr:['Bravo ! {n} est Halal et délicieux ! ⭐','MashaAllah ! {n} est Halal.','Allah nous a donné {n} !'],
+    ar:['يا سلام! {n} حلال ولذيذ! ⭐','ما شاء الله! {n} حلال.','الله أعطانا {n}!'],
+    id:['Hore! {n} Halal dan enak! ⭐','MashaAllah! {n} Halal.']
+  },
+  haram: {
+    en:["Oh, {n} is not for us. Let's pick something else! 🥕",'Allah knows what is best for us. Try another!'],
+    fr:["{n} n'est pas pour nous. Choisis autre chose ! 🥕",'Allah sait ce qui est meilleur. Essaie encore !'],
+    ar:['{n} ليس لنا. لنتخيار شيء آخر! 🥕','الله يعلم ما هو الأفضل لنا.'],
+    id:['{n} bukan untuk kita. Pilih yang lain! 🥕']
+  },
+  mushbooh: {
+    en:['Hmm, {n} might be tricky. Let\'s ask Mom or Dad! That\'s smart.'],
+    fr:['{n} est peut-être compliqué. Demandons à Maman ou Papa !'],
+    ar:['{n} قد يكون صعباً. لنسأل ماما أو بابا!'],
+    id:['{n} mungkin membingungkan. Tanya Ibu atau Ayah!']
+  }
+};
+
+const state = { score:0, streak:0, halal:new Set(), haram:new Set(), mush:new Set(), lang:'en', badges:new Set() };
+
+const $ = id => document.getElementById(id);
+const shelf = $('shelf');
+ITEMS.forEach(it => {
+  const el = document.createElement('div');
+  el.className = 'draggable bg-sky-50 rounded-2xl p-3 text-center shadow-sm';
+  el.draggable = true;
+  el.dataset.id = it.id;
+  el.dataset.cat = it.cat;
+  el.innerHTML = `<div class="text-4xl">${it.emoji}</div><div class="text-xs font-bold mt-1">${it.name}</div>`;
+  el.addEventListener('dragstart', e => { e.dataTransfer.setData('id', it.id); el.classList.add('dragging'); });
+  el.addEventListener('dragend', () => el.classList.remove('dragging'));
+  // Touch support
+  el.addEventListener('touchstart', e => { window._draggedId = it.id; el.classList.add('dragging'); });
+  el.addEventListener('touchend', () => el.classList.remove('dragging'));
+  shelf.appendChild(el);
+});
+
+const scanner = $('scanner');
+scanner.addEventListener('dragover', e => { e.preventDefault(); scanner.classList.add('over'); });
+scanner.addEventListener('dragleave', () => scanner.classList.remove('over'));
+scanner.addEventListener('drop', e => {
+  e.preventDefault();
+  scanner.classList.remove('over');
+  const id = e.dataTransfer.getData('id');
+  handleScan(id);
+});
+scanner.addEventListener('touchend', e => {
+  if (window._draggedId) { handleScan(window._draggedId); window._draggedId = null; }
+});
+
+function handleScan(id) {
+  const it = ITEMS.find(x => x.id === id);
+  if (!it || it._used) return;
+  it._used = true;
+  $('beam').classList.remove('hidden');
+  setTimeout(() => {
+    $('beam').classList.add('hidden');
+    const cat = it.cat;
+    const lines = LINES[cat][state.lang] || LINES[cat].en;
+    const line = lines[Math.floor(Math.random()*lines.length)].replace('{n}', it.name);
+    $('lumi-line').textContent = line;
+    $('scanner').innerHTML = `<div class="text-7xl">${it.emoji}</div>` + '<div id="beam" class="hidden absolute left-2 right-2 h-1.5 bg-sun-500 rounded scan-beam shadow-[0_0_20px_#FFC107]"></div>';
+    if (cat==='halal') {
+      scanner.classList.add('flash-green');
+      state.halal.add(id); state.score += 10; state.streak += 1;
+      if (state.streak === 3) awardBadge('🔥 On Fire');
+      if (state.halal.size === 13) awardBadge('⭐ Halal Hero');
+    } else if (cat==='haram') {
+      scanner.classList.add('flash-red');
+      state.haram.add(id); state.streak = 0;
+      if (state.haram.size === 4) awardBadge('🛡️ Smart Picker');
+    } else {
+      scanner.classList.add('flash-yellow');
+      state.mush.add(id); state.score += 5;
+      if (state.mush.size === 3) awardBadge('🤔 Asks Parents');
+    }
+    $('score').textContent = state.score;
+    $('streak').textContent = state.streak;
+    $('halal-count').textContent = state.halal.size;
+    $('haram-count').textContent = state.haram.size;
+    $('mush-count').textContent = state.mush.size;
+    $('halal-bar').style.width = (state.halal.size/13*100)+'%';
+    $('haram-bar').style.width = (state.haram.size/4*100)+'%';
+    $('mush-bar').style.width = (state.mush.size/3*100)+'%';
+    // Hide used item
+    document.querySelector(`[data-id="${id}"]`).style.opacity = '0.3';
+    document.querySelector(`[data-id="${id}"]`).style.pointerEvents = 'none';
+    if (cat==='halal' && state.streak >= 2) confetti();
+    setTimeout(() => scanner.classList.remove('flash-green','flash-red','flash-yellow'), 600);
+    setTimeout(() => { $('scanner').innerHTML = '📦<div id="beam" class="hidden absolute left-2 right-2 h-1.5 bg-sun-500 rounded scan-beam shadow-[0_0_20px_#FFC107]"></div>'; }, 1500);
+  }, 800);
+}
+
+function awardBadge(name) {
+  if (state.badges.has(name)) return;
+  state.badges.add(name);
+  const b = document.createElement('div');
+  b.className = 'bg-white rounded-full px-2 py-1 text-xs font-bold shadow';
+  b.textContent = name;
+  $('badges').appendChild(b);
+}
+
+function confetti() {
+  const colors = ['#FFD966','#7CC4F2','#A8D5BA','#FFAB91','#1E88E5'];
+  for (let i=0;i<30;i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random()*100+'vw';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDelay = (Math.random()*0.5)+'s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 2500);
+  }
+}
+
+const I18N = {
+  en: { title:'Halal Scanner', sub:'Drag foods onto the scanner', shelf:'Grocery Shelf', progress:'Progress', halal_found:'Halal found', haram_avoided:'Haram avoided', mushbooh_asked:'Asked Mom/Dad', badges:'Badges', lumi_intro:'Pick a food and drag it here!' },
+  fr: { title:'Scanner Halal', sub:'Glisse les aliments sur le scanner', shelf:'Étagère', progress:'Progrès', halal_found:'Halal trouvé', haram_avoided:'Haram évité', mushbooh_asked:'Demandé à un parent', badges:'Badges', lumi_intro:'Choisis un aliment et glisse-le ici !' },
+  ar: { title:'ماسح الحلال', sub:'اسحب الأطعمة إلى الماسح', shelf:'رف البقالة', progress:'التقدم', halal_found:'حلال وُجد', haram_avoided:'حرام تجنبناه', mushbooh_asked:'سألنا الأهل', badges:'الشارات', lumi_intro:'اختاري طعاماً واسحبيه إلى هنا!' },
+  id: { title:'Pemindai Halal', sub:'Seret makanan ke pemindai', shelf:'Rak', progress:'Progres', halal_found:'Halal ditemukan', haram_avoided:'Haram dihindari', mushbooh_asked:'Tanya orang tua', badges:'Lencana', lumi_intro:'Pilih makanan dan seret ke sini!' }
+};
+const ls = $('lang');
+function applyLang(l) {
+  state.lang = l;
+  const d = I18N[l]||I18N.en;
+  document.documentElement.lang = l; document.documentElement.dir = (l==='ar')?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(e => { const k=e.getAttribute('data-i18n'); if(d[k]) e.textContent=d[k]; });
+}
+ls.addEventListener('change', e => applyLang(e.target.value));
+applyLang('en');
+</script>
+</body>
+</html>

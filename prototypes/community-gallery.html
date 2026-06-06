@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NoorQuest — Community Gallery</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: {
+    colors: { sky:{50:'#EAF6FF',300:'#7CC4F2',600:'#1E88E5'}, sun:{300:'#FFD966',500:'#FFC107'}, sage:{300:'#A8D5BA',600:'#43A047'}, coral:{300:'#FFAB91',600:'#E64A19'}, cream:'#FFF8E7', ink:'#1A2A3A'}
+  }}}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Nunito', system-ui, sans-serif; }
+  .gallery-item { transition: transform .2s; }
+  .gallery-item:hover { transform: scale(1.05); }
+  .sticker { transition: all .2s; }
+  .sticker:hover { transform: scale(1.2) rotate(-10deg); }
+  .sticker.sent { opacity: 0.4; }
+</style>
+</head>
+<body class="bg-gradient-to-b from-sky-50 to-cream min-h-screen text-ink">
+
+<header class="bg-white shadow-sm px-4 py-3 flex items-center gap-3 sticky top-0 z-20">
+  <a href="kids-map.html" class="text-2xl">←</a>
+  <div class="text-2xl">🎨</div>
+  <div class="flex-1">
+    <div class="font-extrabold" data-i18n="title">Noor Gallery</div>
+    <div class="text-xs text-ink/60" data-i18n="sub">Share your art with friends (parent approval needed!)</div>
+  </div>
+  <select id="lang" class="rounded-full px-2 py-1 bg-sky-50 text-sm font-semibold">
+    <option value="en">🇬🇧</option><option value="fr">🇫🇷</option><option value="ar">🇸🇦</option><option value="id">🇮🇩</option>
+  </select>
+</header>
+
+<main class="max-w-5xl mx-auto p-4">
+  <div class="bg-sun-300/30 rounded-2xl p-4 mb-4 text-sm flex items-start gap-3">
+    <span class="text-2xl">🛡️</span>
+    <div>
+      <p class="font-bold" data-i18n="safety_title">Safety first</p>
+      <p class="text-ink/70" data-i18n="safety_body">All posts are reviewed by your parents before they appear. We use stickers only — no typing in the gallery.</p>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="flex gap-2 mb-4">
+    <button id="tab-gallery" onclick="showTab('gallery')" class="bg-sky-600 text-white font-bold px-4 py-2 rounded-full" data-i18n="tab_gallery">🖼️ Gallery</button>
+    <button id="tab-pals" onclick="showTab('pals')" class="bg-sky-50 text-ink font-bold px-4 py-2 rounded-full" data-i18n="tab_pals">💌 Pen Pals</button>
+    <button id="tab-upload" onclick="showTab('upload')" class="bg-sage-600 text-white font-bold px-4 py-2 rounded-full" data-i18n="tab_upload">+ Upload</button>
+  </div>
+
+  <!-- Gallery -->
+  <section id="panel-gallery" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div class="gallery-item bg-white rounded-2xl p-3 shadow-sm text-center">
+      <div class="aspect-square bg-gradient-to-br from-sage-300 to-sun-300 rounded-xl flex items-center justify-center text-6xl mb-2">🌳</div>
+      <div class="text-xs font-bold">By Omar, 8</div>
+      <div class="flex justify-center gap-1 text-xs mt-1">❤️ 12 ⭐ 8</div>
+    </div>
+    <div class="gallery-item bg-white rounded-2xl p-3 shadow-sm text-center">
+      <div class="aspect-square bg-gradient-to-br from-sky-300 to-coral-300 rounded-xl flex items-center justify-center text-6xl mb-2">🕌</div>
+      <div class="text-xs font-bold">By Sara, 7</div>
+      <div class="flex justify-center gap-1 text-xs mt-1">❤️ 18 ⭐ 11</div>
+    </div>
+    <div class="gallery-item bg-white rounded-2xl p-3 shadow-sm text-center">
+      <div class="aspect-square bg-gradient-to-br from-sun-300 to-coral-300 rounded-xl flex items-center justify-center text-6xl mb-2">🌙</div>
+      <div class="text-xs font-bold">By Hamza, 6</div>
+      <div class="flex justify-center gap-1 text-xs mt-1">❤️ 9 ⭐ 6</div>
+    </div>
+    <div class="gallery-item bg-white rounded-2xl p-3 shadow-sm text-center">
+      <div class="aspect-square bg-gradient-to-br from-coral-300 to-sage-300 rounded-xl flex items-center justify-center text-6xl mb-2">🌷</div>
+      <div class="text-xs font-bold">By Maryam, 9</div>
+      <div class="flex justify-center gap-1 text-xs mt-1">❤️ 21 ⭐ 15</div>
+    </div>
+  </section>
+
+  <!-- Pen Pals -->
+  <section id="panel-pals" class="hidden">
+    <h2 class="font-extrabold text-xl mb-3" data-i18n="pals_title">Send a sticker to a pen pal</h2>
+    <div class="bg-white rounded-2xl p-4 shadow-sm mb-4">
+      <div class="text-sm font-bold mb-2" data-i18n="pals_pick">Pick a friend</div>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <button onclick="selectPal(this,'Omar')" class="pal-btn bg-sky-50 hover:bg-sky-300 rounded-full px-3 py-1.5 text-sm font-bold">👦 Omar, 8 (Türkiye)</button>
+        <button onclick="selectPal(this,'Sara')" class="pal-btn bg-sky-50 hover:bg-sky-300 rounded-full px-3 py-1.5 text-sm font-bold">👧 Sara, 7 (France)</button>
+        <button onclick="selectPal(this,'Hamza')" class="pal-btn bg-sky-50 hover:bg-sky-300 rounded-full px-3 py-1.5 text-sm font-bold">👦 Hamza, 6 (Egypt)</button>
+        <button onclick="selectPal(this,'Maryam')" class="pal-btn bg-sky-50 hover:bg-sky-300 rounded-full px-3 py-1.5 text-sm font-bold">👧 Maryam, 9 (Canada)</button>
+      </div>
+      <div class="text-sm font-bold mb-2" data-i18n="pals_sticker">Pick a sticker</div>
+      <div class="flex flex-wrap gap-3 mb-4">
+        <button onclick="selectSticker(this,'⭐')" class="sticker text-4xl">⭐</button>
+        <button onclick="selectSticker(this,'🌙')" class="sticker text-4xl">🌙</button>
+        <button onclick="selectSticker(this,'🌟')" class="sticker text-4xl">🌟</button>
+        <button onclick="selectSticker(this,'💚')" class="sticker text-4xl">💚</button>
+        <button onclick="selectSticker(this,'🌷')" class="sticker text-4xl">🌷</button>
+        <button onclick="selectSticker(this,'🎉')" class="sticker text-4xl">🎉</button>
+        <button onclick="selectSticker(this,'🤝')" class="sticker text-4xl">🤝</button>
+        <button onclick="selectSticker(this,'🌈')" class="sticker text-4xl">🌈</button>
+      </div>
+      <button id="send-btn" onclick="sendSticker()" class="w-full bg-sun-500 text-ink font-extrabold py-3 rounded-2xl disabled:opacity-50" disabled data-i18n="pals_send">Send to Mom/Dad for approval</button>
+    </div>
+    <div id="sent-log" class="space-y-2"></div>
+  </section>
+
+  <!-- Upload -->
+  <section id="panel-upload" class="hidden">
+    <h2 class="font-extrabold text-xl mb-3" data-i18n="upload_title">Share your art</h2>
+    <div class="bg-white rounded-2xl p-6 shadow-sm">
+      <div class="border-4 border-dashed border-sky-300 rounded-2xl p-8 text-center mb-4">
+        <div class="text-5xl mb-2">🖼️</div>
+        <p class="text-ink/60 text-sm" data-i18n="upload_pick">(In the real app, tap to pick a drawing)</p>
+      </div>
+      <p class="text-sm text-ink/60 mb-4" data-i18n="upload_caption">Pick one sticker to go with your art (no typing allowed)</p>
+      <div class="flex flex-wrap gap-3 mb-4">
+        <button class="sticker text-4xl">⭐</button>
+        <button class="sticker text-4xl">🌙</button>
+        <button class="sticker text-4xl">🌟</button>
+        <button class="sticker text-4xl">💚</button>
+        <button class="sticker text-4xl">🌷</button>
+      </div>
+      <button onclick="submitUpload()" class="w-full bg-sage-600 text-white font-extrabold py-3 rounded-2xl" data-i18n="upload_send">Send to Mom/Dad for approval</button>
+      <p id="upload-status" class="hidden text-center mt-3 text-sage-600 font-bold" data-i18n="upload_sent">✅ Sent! Your parent will see it soon.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+let state = { tab:'gallery', pal:null, sticker:null, sent:[] };
+
+function showTab(t) {
+  state.tab = t;
+  ['gallery','pals','upload'].forEach(x => {
+    document.getElementById('panel-'+x).classList.toggle('hidden', x!==t);
+  });
+  document.getElementById('tab-gallery').className = (t==='gallery'?'bg-sky-600 text-white font-bold px-4 py-2 rounded-full':'bg-sky-50 text-ink font-bold px-4 py-2 rounded-full');
+  document.getElementById('tab-pals').className = (t==='pals'?'bg-sky-600 text-white font-bold px-4 py-2 rounded-full':'bg-sky-50 text-ink font-bold px-4 py-2 rounded-full');
+  document.getElementById('tab-upload').className = (t==='upload'?'bg-sage-600 text-white font-bold px-4 py-2 rounded-full':'bg-sage-600 text-white font-bold px-4 py-2 rounded-full');
+}
+
+function selectPal(btn, name) {
+  document.querySelectorAll('.pal-btn').forEach(b => b.classList.remove('bg-sky-300','ring-2','ring-sky-600'));
+  btn.classList.add('bg-sky-300','ring-2','ring-sky-600');
+  state.pal = name;
+  updateSend();
+}
+
+function selectSticker(btn, s) {
+  document.querySelectorAll('.sticker').forEach(b => b.classList.remove('ring-4','ring-sun-500','rounded-full'));
+  btn.classList.add('ring-4','ring-sun-500','rounded-full');
+  state.sticker = s;
+  updateSend();
+}
+
+function updateSend() {
+  document.getElementById('send-btn').disabled = !(state.pal && state.sticker);
+}
+
+function sendSticker() {
+  if (!state.pal || !state.sticker) return;
+  state.sent.push({ pal: state.pal, sticker: state.sticker });
+  const log = document.getElementById('sent-log');
+  const item = document.createElement('div');
+  item.className = 'bg-white rounded-xl p-3 shadow-sm text-sm flex items-center gap-3';
+  item.innerHTML = `<span class="text-2xl">${state.sticker}</span><span>To <b>${state.pal}</b> — waiting for parent's approval</span>`;
+  log.prepend(item);
+  state.pal = null; state.sticker = null;
+  document.querySelectorAll('.pal-btn').forEach(b => b.classList.remove('bg-sky-300','ring-2','ring-sky-600'));
+  document.querySelectorAll('.sticker').forEach(b => b.classList.remove('ring-4','ring-sun-500','rounded-full'));
+  updateSend();
+}
+
+function submitUpload() {
+  document.getElementById('upload-status').classList.remove('hidden');
+}
+
+const I18N = {
+  en: { title:'Noor Gallery', sub:'Share your art with friends (parent approval needed!)', safety_title:'Safety first', safety_body:'All posts are reviewed by your parents before they appear. We use stickers only — no typing in the gallery.', tab_gallery:'🖼️ Gallery', tab_pals:'💌 Pen Pals', tab_upload:'+ Upload', pals_title:'Send a sticker to a pen pal', pals_pick:'Pick a friend', pals_sticker:'Pick a sticker', pals_send:'Send to Mom/Dad for approval', upload_title:'Share your art', upload_pick:'(In the real app, tap to pick a drawing)', upload_caption:'Pick one sticker to go with your art (no typing allowed)', upload_send:'Send to Mom/Dad for approval', upload_sent:'✅ Sent! Your parent will see it soon.' },
+  fr: { title:'Galerie Noor', sub:'Partage ton art avec tes amis (accord parental requis !)', safety_title:'Sécurité d\'abord', safety_body:'Tous les messages sont vérifiés par tes parents. On utilise seulement des stickers — pas de texte.', tab_gallery:'🖼️ Galerie', tab_pals:'💌 Amis', tab_upload:'+ Envoyer', pals_title:'Envoie un sticker à un ami', pals_pick:'Choisis un ami', pals_sticker:'Choisis un sticker', pals_send:'Envoyer à Papa/Maman pour accord', upload_title:'Partage ton art', upload_pick:'(Dans l\'app, touche pour choisir un dessin)', upload_caption:'Choisis un sticker (pas de texte)', upload_send:'Envoyer à Papa/Maman pour accord', upload_sent:'✅ Envoyé ! Ton parent verra bientôt.' },
+  ar: { title:'معرض النور', sub:'شاركي فنك مع الأصدقاء (بحاجة لموافقة الأهل!)', safety_title:'السلامة أولاً', safety_body:'كل المشاركات يراجعها الأهل قبل الظهور. نستخدم الملصقات فقط — لا كتابة.', tab_gallery:'🖼️ المعرض', tab_pals:'💌 أصدقاء', tab_upload:'+ رفع', pals_title:'أرسلي ملصقاً لصديق', pals_pick:'اختاري صديقاً', pals_sticker:'اختاري ملصقاً', pals_send:'إرسال إلى ماما/بابا للموافقة', upload_title:'شاركي فنك', upload_pick:'(في التطبيق، انقري لاختيار رسمة)', upload_caption:'اختاري ملصقاً واحداً (لا كتابة)', upload_send:'إرسال إلى ماما/بابا للموافقة', upload_sent:'✅ تم الإرسال! سيرى الأهل قريباً.' },
+  id: { title:'Galeri Noor', sub:'Bagikan karyamu (perlu persetujuan orang tua!)', safety_title:'Keamanan dulu', safety_body:'Semua kiriman ditinjau orang tua. Kami hanya pakai stiker — tanpa mengetik.', tab_gallery:'🖼️ Galeri', tab_pals:'💌 Sahabat', tab_upload:'+ Unggah', pals_title:'Kirim stiker ke sahabat', pals_pick:'Pilih sahabat', pals_sticker:'Pilih stiker', pals_send:'Kirim ke Ibu/Ayah untuk persetujuan', upload_title:'Bagikan karyamu', upload_pick:'(Di aplikasi, ketuk untuk memilih gambar)', upload_caption:'Pilih satu stiker (tanpa mengetik)', upload_send:'Kirim ke Ibu/Ayah untuk persetujuan', upload_sent:'✅ Terkirim! Orang tuamu akan segera melihatnya.' }
+};
+const ls = document.getElementById('lang');
+function apply(l) {
+  const d = I18N[l]||I18N.en;
+  document.documentElement.lang = l; document.documentElement.dir = (l==='ar')?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(e => { const k=e.getAttribute('data-i18n'); if(d[k]) e.textContent=d[k]; });
+}
+ls.addEventListener('change', e => apply(e.target.value));
+apply('en');
+</script>
+</body>
+</html>
