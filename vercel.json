@@ -1,10 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rootDirectory": "noorquest",
   "framework": "nextjs",
   "regions": ["iad1"],
-  "buildCommand": "cd noorquest && pnpm install --frozen-lockfile=false && pnpm build",
-  "installCommand": "cd noorquest && pnpm install --frozen-lockfile=false",
-  "outputDirectory": "noorquest/.next",
+  "buildCommand": "pnpm install --frozen-lockfile=false && pnpm build",
+  "installCommand": "pnpm install --frozen-lockfile=false",
   "github": {
     "silent": false,
     "autoAlias": true
