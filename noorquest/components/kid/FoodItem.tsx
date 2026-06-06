@@ -12,7 +12,7 @@ interface FoodItemProps {
 export function FoodItem({ item, locale, disabled }: FoodItemProps) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: item.id,
-    disabled,
+    disabled: disabled === true,
   });
 
   return (
